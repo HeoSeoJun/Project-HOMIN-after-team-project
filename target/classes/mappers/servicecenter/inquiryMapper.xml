@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.care.homin.servicecenter.dao.ServicecenterDAO">
+
+	<insert id="inquiryProc" parameterType="com.care.homin.servicecenter.dto.InquiryDTO">
+		<selectKey keyProperty="no" resultType="int" order="BEFORE">
+			SELECT nvl(max(no), 0)+1 FROM inquiry
+		</selectKey>					
+		INSERT INTO inquiry VALUES(#{no}, #{id}, #{inquiryType}, #{title}, #{content}, #{fileName}, #{writeDate}, #{state}, #{answer})
+	</insert>
+	
+	<select id="inquiryCount" resultType="int" parameterType="HashMap">
+		SELECT count(*) FROM inquiry 
+	</select>
+	
+	<select id="inquiryList" resultType="com.care.homin.servicecenter.dto.InquiryDTO" parameterType="int">
+		SELECT B.* FROM(
+			SELECT rownum rn, A.* FROM(
+				SELECT * FROM inquiry
+				<choose>
+					<when test="sel == 'waiting'">WHERE state LIKE '%'||#{sel}||'%'</when>
+					<when test="sel == 'complete'">WHERE state LIKE '%'||#{sel}||'%'</when>
+				</choose>
+				 ORDER BY no DESC 
+			)A
+		)B WHERE rn BETWEEN #{b} and #{e}
+	</select>
+	
+	<select id = "selectInquiry" resultType = "com.care.homin.servicecenter.dto.InquiryDTO">
+		SELECT * FROM inquiry WHERE no=#{no}
+	</select>
+	
+	<update id="inquiryAnswerProc" parameterType="com.care.homin.servicecenter.dto.InquiryDTO" >
+		UPDATE inquiry SET answer=#{answer}, state=#{state} WHERE no=#{no}
+	</update>
+
+</mapper>

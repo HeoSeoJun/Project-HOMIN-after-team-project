@@ -1,0 +1,273 @@
+@charset "UTF-8";
+
+/*service center form  */
+
+.under_wrap{
+	width: 100%;
+	margin : 30 5px;
+	
+	}
+	
+.under_wrap h1 {
+	font-size : 30px;
+}
+
+.search_qbox {
+	border:none;
+}
+
+
+	
+.wrap{
+	display: flex; 
+	flex-direction: row;
+	justify-content : center;
+	padding-bottom: 70px;
+	}
+	
+.search{
+   
+    margin: 20px;
+    margin: 70 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 180px;
+    border-bottom: 1px solid #ddd;
+    color: black;
+    font-size: 30px;
+	
+	}
+.search_qbox{
+	border: none;
+    font-size: 25px;
+    font-weight: bold;
+    text-align: right;
+}	
+
+.child{
+	margin-top: 5px;
+	background : #effbff;
+	color: grey;
+	padding-left : 10px;
+	    padding-right: 10px;
+	}
+	
+.content_row_1{
+	flex-direction: column;
+    width: 95%;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.servicecenter_main_title{
+	margin-top: -20px;
+    font-size: 50px;
+    border-bottom: 4px solid#ddd;
+    padding: 22 40;
+    border-radius: 12px;
+    box-shadow: 6px 4px 10px 5px rgb(234 235 239 / 80%);
+}		
+.faq_button {
+	
+	display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
+    padding-bottom: 50px;
+	
+}
+
+.bt{
+	margin-left: 7px;
+    height: 25px;
+    width: 100%;
+    border-radius: 12px;
+    height: 65px;
+    background-color: white;
+    border: 3px solid #00a9b4;
+    color: #00a9b4;
+    border-style: solid;
+    font-weight: bold;
+    font-size: 22px;
+    box-sizing: border-box;
+	
+}
+
+/*faq jsp*/
+
+.faq{
+	line-height : 65px;
+	border-bottom : 0.1px solid #e2e8f0;
+	color: #333;
+	padding-left : 10px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+
+/* inquiry form*/
+
+.inquiry_test {
+	border-bottom: 4px solid #ddd;
+    margin: 10 0px;
+    padding: 50px;
+    border-radius: 12px;
+    box-shadow: 4px 4px 10px 7px rgb(234 235 239 / 80%);
+}
+.inquiry_test_warnning p{
+	font-size: 14px;
+	letter-spacing: -.5px;
+	line-height: normal;
+    color: #727272;
+    margin : 15px;
+}
+
+.inquiry_test_head{
+	font-size: 22px;
+    margin-bottom: 20px;
+	display : flex;
+	justify-content: space-between;
+	align-items : flex-end;
+}
+.inquiry_test_head h3 {
+	
+	padding-bottom : 10px;
+}
+
+.inquiry_test_head h6 {
+	font-size : 12px;
+	padding-bottom : 10px;
+	font-weight : bold;
+	color : #666;	
+}
+
+
+.inquiry_test_type{
+	margin-top: 50px;
+	display: flex; 
+	flex-direction: row;
+	justify-content: left;
+	align-items: center;
+	
+}
+.inquiry_test_type_p {
+	margin-right : 100px;
+	flex : none;
+	width:180px;
+	min-height : 50px;
+	margin-right : 32px;
+	padding : 25px 10;
+	line-height : 24px;
+	font-size : 15px;
+	color : #666;	
+	font-weight : bold;
+}
+
+
+.main_inquirytype_title{
+	display: flex; 
+	flex-direction: row;
+	justify-content: left;
+	align-items: center;
+	margin-top: 50px;
+}
+
+
+.inquirytype_title_textarea {
+	border : none;
+	border-bottom : 1px solid #666; 
+	width : 450px;
+	height : 30px;
+	font-weight:bold;
+	
+	
+	
+}
+
+.inquirytype_wrap{
+	display:flex;
+	justify-content:left;
+	align-items:center;
+}
+
+.inquirytype_text_textarea{
+	border : 1px solid #666;
+	border-radius: 10px; 
+	width : 450px;
+	height : 150px;
+	text-align: center;
+	padding-left : 10px;
+	padding-right : 10px;
+	padding-top : 20px;
+	font-weight:bold;
+	
+}
+
+.inquirytype_text{
+	margin : 0;
+}
+
+.main_inquirytype_photo{
+	margin-top: 50px;
+	display: flex; 
+	flex-direction: row;
+	justify-content: left;
+	align-items: center;
+}
+
+
+
+.inquirytype_photo_input{
+	border : none;
+	border-bottom : 1px solid #666; 
+	width : 450px;
+	height : 30px;
+	font-weight:bold;
+}
+
+.cus_under_box { 
+	margin-top: 50px;
+	width: 100%;
+	background: #effbff;
+	padding-top: 20px;
+    padding-bottom: 20px;	
+    border-radius : 5px;
+}
+
+.cus_under_box p{
+	padding : 10px;
+	
+	flex : none;
+
+	
+	font-size : 15px;
+	color : #666;		
+	font-weight : bold;
+}
+.cus_under_btn {
+	display:flex;
+	justify-content: center;
+	align-items : center;
+	margin:20px;
+}
+
+.cus_under_btn_input{
+	
+	width: 220px;
+	height:50px;
+	
+    background-color: #35c5f0;
+    border-color: #35c5f0;
+    color: #ffffff;
+    border-radius: 10px;
+    border-width: 1 px;
+    border-style: solid;
+    font-weight: bold;
+    box-sizing: border-box;
+}
+
+
+

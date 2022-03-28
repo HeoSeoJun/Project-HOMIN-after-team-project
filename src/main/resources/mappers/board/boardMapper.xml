@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.care.homin.board.dao.BoardDAO">
+
+	<insert id="writeProc" parameterType="com.care.homin.board.dto.BoardDTO">
+		<selectKey keyProperty="no" resultType="int" order="BEFORE">
+			SELECT nvl(max(no), 0)+1 FROM homin_board
+		</selectKey>					
+		INSERT INTO homin_board VALUES(#{no}, #{id}, #{title}, #{content}, #{hit}, #{writeTime}, #{fileName}, #{review_star},#{product_img},#{classification},#{order_no})
+	</insert>
+	
+	<select id="boardCount" resultType="int" parameterType="HashMap">
+		SELECT count(*) FROM homin_board 
+		<choose>
+			<when test="select == 'title'">WHERE title LIKE '%'||#{search}||'%'</when>
+			<when test="select == 'content'">WHERE content LIKE '%'||#{search}||'%'</when>
+			<when test="select == 'id'">WHERE id LIKE '%'||#{search}||'%'</when>
+		</choose>
+	</select>
+	
+	<select id="boardProc" resultType="com.care.homin.board.dto.BoardDTO" parameterType="int">
+		SELECT B.* FROM(
+			SELECT rownum rn, A.* FROM(
+				SELECT * FROM homin_board
+				<choose>
+					<when test="sel == 'id'">WHERE id LIKE '%'||#{search}||'%'</when>
+					<when test="sel == 'content'">WHERE content LIKE '%'||#{search}||'%'</when>
+					<when test="sel == 'title'">WHERE title LIKE '%'||#{search}||'%'</when>
+				</choose>
+				 ORDER BY no DESC 
+			)A
+		)B WHERE rn BETWEEN #{b} and #{e}
+	</select>
+	
+	<select id = "selectBoard" resultType = "com.care.homin.board.dto.BoardDTO">
+		SELECT * FROM homin_board WHERE no=#{no}
+		<!-- SELECT * FROM homin_board LEFT JOIN homboard_comment ON homin_board.no = homboard_comment.board_no WHERE no = #{no}; -->
+	</select>
+	
+	<update id="upHit" parameterType="int" >
+		UPDATE homin_board SET hit=hit+1 WHERE no=#{no}
+	</update>
+	
+	<insert id="commentProc" parameterType="com.care.homin.board.dto.CommentDTO">
+		<selectKey keyProperty="comment_no" resultType="int" order="BEFORE">
+			SELECT nvl(max(comment_no), 0)+1 FROM homboard_comment
+		</selectKey>					
+		INSERT INTO homboard_comment VALUES(#{id}, #{comment_content}, #{board_no}, #{writetime}, #{comment_no})
+	</insert>
+	
+	<select id = "selectComment" resultType = "com.care.homin.board.dto.CommentDTO">
+		SELECT * FROM homboard_comment WHERE board_no=#{no}
+	</select>
+	
+	<select id="getFileName" parameterType="int" resultType="String">
+		SELECT filename FROM homin_board WHERE no=#{no}
+	</select>
+	
+	<delete id="deleteBoard" parameterType="int">
+		DELETE FROM homin_board WHERE no=#{no}
+	</delete>	
+	
+	<delete id="deleteComment" parameterType="int">
+		DELETE FROM homboard_comment WHERE comment_no=#{no}
+	</delete>	
+	
+	<update id="modifyProc" parameterType="com.care.homin.board.dto.BoardDTO" >
+		UPDATE homin_board SET title=#{title}, content=#{content}, hit=#{hit}, writeTime=#{writeTime}, fileName=#{fileName}, review_star=#{review_star} WHERE no=#{no}
+	</update>
+
+	<select id = "pwCheck" resultType = "com.care.homin.login.dto.LoginDTO">
+		SELECT * FROM login_homin WHERE id=#{id}
+	</select>
+</mapper>

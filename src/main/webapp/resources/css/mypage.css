@@ -1,0 +1,29 @@
+@charset "utf-8";
+
+/* mypageform*/
+
+.bascket_test{
+	margin: 100 0px;
+}
+.mypage_aside_wrap{
+	margin-right: 100px;
+	width: 240px;
+    padding: 30px 25px 18px;
+    border-radius: 4px;
+    border: 1px solid #dadce0;
+    box-shadow: 0 2px 4px 0 rgb(63 71 77 / 6%);
+}
+
+.mypage_aside_wrap img{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: left;
+}
+
+.mypage_aside_nav{
+	font-weight: 700;
+	line-height: 40px;
+}

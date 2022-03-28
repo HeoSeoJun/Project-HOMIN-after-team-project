@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.care.homin.mypage.repository.IMypageDAO">
+	<resultMap type="com.care.homin.login.dto.LoginDTO" id="loginDto">
+		<result property="id" column="id"/>
+		<result property="pw" column="pw"/>
+	</resultMap>
+	<select resultMap="loginDto" id="infoLogin" parameterType="String">
+		SELECT * FROM login_homin WHERE id = #{id}
+	</select>
+	
+	<resultMap type="com.care.homin.membership.dto.MemberDTO" id="memberDto">
+		<result property="no" column="no"/>
+		<result property="id" column="id"/>
+		<result property="nickname" column="nickname"/>
+		<result property="phone" column="phone"/>
+		<result property="email" column="email"/>
+	</resultMap>
+	<select resultMap="memberDto" id="infoMember" parameterType="String">
+		SELECT * FROM member_homin WHERE id = #{id}
+	</select>
+	<resultMap type="com.care.homin.membership.dto.MemberDTO" id="mbDto">
+		<result property="no" column="no"/>
+		<result property="id" column="id"/>
+		<result property="nickname" column="nickname"/>
+		<result property="phone" column="phone"/>
+		<result property="email" column="email"/>
+	</resultMap>
+	<select resultMap="mbDto" id="infoMemberByNo" parameterType="int">
+		SELECT * FROM member_homin WHERE no = #{no}
+	</select>
+	
+	<resultMap type="com.care.homin.membership.dto.PostcodeDTO" id="postcodeDto">
+		<result property="id" column="id"/>
+		<result property="zipcode" column="zipcode"/>
+		<result property="addr1" column="addr1"/>
+		<result property="addr2" column="addr2"/>
+	</resultMap>
+	<select resultMap="postcodeDto" id="infoAddr" parameterType="String">
+		SELECT * FROM postcode_homin WHERE id = #{id}
+	</select>
+	
+	<delete id="deleteProc" parameterType="String">
+		DELETE FROM login_homin WHERE id=#{id}
+	</delete>
+	<delete id="deleteProcAddr" parameterType="String">
+		DELETE FROM postcode_homin WHERE id=#{id}
+	</delete>
+	
+	<update id="updateLogin" parameterType="com.care.homin.membership.dto.MemberDTO">
+		UPDATE login_homin SET pw=#{pw} WHERE id=#{id}	
+	</update>
+	<update id="updateMember" parameterType="com.care.homin.membership.dto.MemberDTO">
+		UPDATE member_homin SET nickname=#{nickname}, phone=#{phone}, email=#{email} WHERE id=#{id}	
+	</update>
+	<update id="updateAddrProc" parameterType="com.care.homin.membership.dto.PostcodeDTO">
+		UPDATE postcode_homin SET zipcode=#{zipcode}, addr1=#{addr1}, addr2=#{addr2} WHERE id=#{id}	
+	</update>
+	
+	<insert id="registerAdProc" parameterType="com.care.homin.membership.dto.PostcodeDTO">
+		INSERT INTO postcode_homin VALUES(#{id}, #{zipcode}, #{addr1}, #{addr2})
+	</insert>
+	
+	<select  id="myInquiry" parameterType="String" resultType="com.care.homin.servicecenter.dto.InquiryDTO">
+		SELECT * FROM inquiry WHERE id = #{id}
+	</select>
+	
+	<select  id="myInquiryView" parameterType="String" resultType="com.care.homin.servicecenter.dto.InquiryDTO">
+		SELECT * FROM inquiry WHERE no = #{no}
+	</select>
+	
+	<select  id="myOrder" parameterType="String" resultMap="order">
+		SELECT * FROM homin_order WHERE buyer_id = #{buyer_id}
+	</select>
+	
+	<resultMap type="com.care.homin.rental.dto.orderDTO" id="order">
+		<result property="uid" column="IMP_UID"/>
+		<result property="email" column="BUYER_EMAIL"/>
+		<result property="addr" column="BUYER_ADDR"/>
+		<result property="postcode" column="BUYER_POSTCODE"/>
+		<result property="name" column="BUYER_NAME"/>
+		<result property="tell" column="BUYER_TELL"/>
+		<result property="amount" column="PRODUCT_AMOUNT"/>
+		<result property="productName" column="PRODUCT_NAME"/>
+		<result property="buyer_id" column="BUYER_ID"/>
+	</resultMap>
+	
+	<delete id="deleteInquiry" parameterType="String">
+		DELETE FROM inquiry WHERE no=#{prodNo}
+	</delete>
+	
+	<select  id="selectAllMember" parameterType="String" resultType="com.care.homin.membership.dto.MemberDTO">
+		SELECT * FROM member_homin
+	</select>
+	
+	
+</mapper>

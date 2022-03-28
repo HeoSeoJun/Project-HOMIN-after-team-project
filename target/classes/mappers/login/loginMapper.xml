@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.care.homin.login.dao.ILoginDAO">
+	
+	<resultMap type="com.care.homin.login.dto.LoginDTO" id="loginChk">
+		<result property="id" column="id"/>
+		<result property="pw" column="pw"/>
+	</resultMap>
+	<select id="loginProc" parameterType="String" resultMap="loginChk">
+		SELECT * FROM login_homin WHERE id=#{id}
+	</select>
+	
+<!-- 	SQL> INSERT INTO login_homin VALUES( -->
+<!--   2  no_login_homin.nextval, -->
+<!--   3  'admin', -->
+<!--   4  'a123'); -->
+</mapper>

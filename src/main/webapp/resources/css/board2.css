@@ -1,0 +1,24 @@
+@charset "utf-8";
+
+  
+	
+td a:link {
+	color: black;
+	font-family: sans-serif;
+	text-decoration: none;
+}
+
+td a:visited {
+	color: black;
+	font-family: sans-serif;
+	text-decoration: none;
+}
+
+td a:hover {
+	color: grey;
+	font-weight: bold;
+}
+
+td a:active {
+	color: grey;
+	text-decoration: underline;}

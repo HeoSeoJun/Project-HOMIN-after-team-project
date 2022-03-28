@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.care.homin.membership.dao.IMemberDAO">
+	<resultMap type="com.care.homin.membership.dto.MemberDTO" id="memberDto">
+		<result property="no" column="no"/>
+		<result property="id" column="id"/>
+		<result property="nickname" column="nickname"/>
+		<result property="phone" column="phone"/>
+		<result property="email" column="email"/>
+	</resultMap>
+	<select resultMap="memberDto" id="memberProc" parameterType="String">
+		SELECT * FROM member_homin WHERE id = #{id}
+	</select>
+	
+	<select id="isExistId" resultType="int" parameterType="String">
+		SELECT count(*) FROM login_homin WHERE id=#{id}
+	</select>
+	
+	<insert id="insertLogin" parameterType="com.care.homin.login.dto.LoginDTO">
+		INSERT INTO login_homin VALUES(#{id},#{pw})
+	</insert>
+	<insert id="insertMember" parameterType="com.care.homin.membership.dto.MemberDTO">
+		INSERT INTO member_homin VALUES(no_member_homin.nextval, #{id}, #{nickname}, #{phone}, #{email})		
+	</insert>
+	<insert id="insertPost" parameterType="com.care.homin.membership.dto.PostcodeDTO">
+		INSERT INTO postcode_homin VALUES(#{id}, #{zipcode}, #{addr1}, #{addr2})
+	</insert>
+	
+	<select resultType="com.care.homin.membership.dto.PostcodeDTO" id="selectPost" parameterType="String">
+		SELECT * FROM postcode_homin WHERE id = #{id}
+	</select>
+	
+</mapper>

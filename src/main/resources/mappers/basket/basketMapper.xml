@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.care.homin.basket.dao.IBasketDAO">
+	<select id="searchProduct" parameterType="String" resultType="com.care.homin.rental.dto.RentalDTO">
+		SELECT * FROM homin_product WHERE product_no=#{no_}
+	</select>
+	
+	<insert id="putProduct" parameterType="com.care.homin.basket.dto.BasketDTO">
+		INSERT INTO homin_basket VALUES(#{id}, #{product_no}, #{product_name}, #{classification}, #{price},#{product_img})
+	</insert>
+	
+	<select id="getBasket" parameterType="String" resultType="com.care.homin.basket.dto.BasketDTO">
+		SELECT * FROM homin_basket WHERE id=#{id}
+	</select>
+	
+	<select id="isExisted" parameterType="map" resultType="com.care.homin.basket.dto.BasketDTO">
+		SELECT * FROM homin_basket WHERE product_no=#{no} AND id=#{id}
+	</select>
+	
+	<delete id="deleteBasket" parameterType="map">
+		DELETE FROM homin_basket WHERE product_no=#{no} AND id=#{id}
+	</delete>
+	
+	<insert id="tlqkf" parameterType="com.care.homin.basket.dto.BasketDTO">
+		INSERT INTO homin_product VALUES(#{product_no}, #{product_name}, #{product_filename}, #{classification}, #{price},#{hit},#{ordercount})
+	</insert>
+	
+</mapper>
