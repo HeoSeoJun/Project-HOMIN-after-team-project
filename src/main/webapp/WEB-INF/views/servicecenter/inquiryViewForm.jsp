@@ -8,8 +8,7 @@
 		<table style="width: 650px;">
 			<tr>
 				<td style="width: 300px; height: 40px;" valign="middle"><h2>${view.title }</h2></td>
-				<td style="width: 350px; height: 40px;" align="right"
-					valign="bottom">${view.writeDate }</td>
+				<td style="width: 350px; height: 40px;" align="right" valign="bottom">${view.writeDate }</td>
 			</tr>
 			<tr>
 				<td colspan=2><hr /></td>

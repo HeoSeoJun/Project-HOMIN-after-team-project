@@ -51,16 +51,16 @@ public class ServicecenterController {
 		return "/servicecenter/faq/faqEtc";
 	}
 	
+//	1:1문의
 	@RequestMapping(value = "/inquiry")
 	public String inquiry() {
 		return "/servicecenter/inquiryForm";
 	}
 	
-	@RequestMapping(value = "/inquiryAnswer")
-	public String inquiryAnswer(Model model, @RequestParam(value="currentPage", required = false, defaultValue = "1")int currentPage,
-			HttpServletRequest req, String select) {
-		service.allInquiry(model, currentPage, req,select);
-		return "/servicecenter/inquiryAnswerForm";
+	@RequestMapping(value = "/inquiryProc")
+	public String inquiryProc(MultipartHttpServletRequest multi) {
+		service.inquiryProc(multi);
+		return "forward:index?formpath=home";
 	}
 	
 	@RequestMapping(value = "/inquiryViewProc")
@@ -70,22 +70,25 @@ public class ServicecenterController {
 		return "/servicecenter/inquiryViewForm";
 	}
 	
-	@RequestMapping(value = "/notice")
-	public String notice(Model model) {
-		ArrayList<NoticeDTO> all = service.allNotice();
-		model.addAttribute("all",all);
-		return "/servicecenter/noticeForm";
-	}
-	@RequestMapping(value = "/inquiryProc")
-	public String inquiryProc(MultipartHttpServletRequest multi) {
-		service.inquiryProc(multi);
-		return "forward:index?formpath=home";
+	@RequestMapping(value = "/inquiryAnswer")
+	public String inquiryAnswer(Model model, @RequestParam(value="currentPage", required = false, defaultValue = "1")int currentPage,
+			HttpServletRequest req, String select) {
+		service.allInquiry(model, currentPage, req,select);
+		return "/servicecenter/inquiryAnswerForm";
 	}
 	
 	@RequestMapping(value = "/inquiryAnswerProc")
 	public String inquiryAnswerProc(InquiryDTO dto) {
 		service.inquiryAnswerProc(dto);
 		return "forward:index?formpath=home";
+	}
+	
+//	공지사항
+	@RequestMapping(value = "/notice")
+	public String notice(Model model) {
+		ArrayList<NoticeDTO> all = service.allNotice();
+		model.addAttribute("all",all);
+		return "/servicecenter/noticeForm";
 	}
 	
 	@RequestMapping(value = "/noticeView")

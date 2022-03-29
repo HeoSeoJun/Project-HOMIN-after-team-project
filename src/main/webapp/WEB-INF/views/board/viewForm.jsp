@@ -102,7 +102,7 @@
             
             <c:forEach var="file" items="${fileName }"> 
 				<div> 
-				<img src = "/img/${file }" style="width: 500px; height: 500px;"> 
+				<img src = "${file }" style="width: 500px; height: 500px;"> 
 				</div>
  			</c:forEach>
             

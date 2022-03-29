@@ -49,7 +49,7 @@
 		</c:forEach>
             </tbody>
           </table>
-          <c:if test = "${sessionScope.id eq 'admin' }">
+          <c:if test = "${sessionScope.id eq 'ADMIN@CARE.COM' }">
           	<input type = "button" value = "등록" onclick = "location.href='${root}index?formpath=servicecenter&list=noticeWrite'">
           </c:if>
         </div>

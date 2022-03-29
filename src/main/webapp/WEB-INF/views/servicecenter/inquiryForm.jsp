@@ -2,7 +2,12 @@
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:url var="root" value="/" />
-
+<c:if test="${empty sessionScope.id}">
+	<script>
+		alert('로그인 후 이용가능합니다.');
+		location.href='${root}index?formpath=login';
+	</script>
+</c:if>
   
 
 <!DOCTYPE html>
@@ -15,114 +20,118 @@
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script type="text/javascript">
+  // 문서가 준비되면 매개변수로 넣은 콜백 함수를 실행하라는 의미.
+  $(document).ready(function (e) {
+    $("input[type='file']").change(function (e) {
+      //div 내용 비워주기
+      $('#preview').empty();
 
-	// 문서가 준비되면 매개변수로 넣은 콜백 함수를 실행하라는 의미.
-	$(document).ready(function (e){
-    	$("input[type='file']").change(function(e){
+      var files = e.target.files;
+      var arr = Array.prototype.slice.call(files);
 
-     	 	//div 내용 비워주기
-			$('#preview').empty();
-
-			var files = e.target.files;
-      		var arr = Array.prototype.slice.call(files);
-      
-      		//업로드 가능 파일인지 체크
-     		for(var i=0;i<files.length;i++){
-       		if(!checkExtension(files[i].name,files[i].size)){
-          	return false;
-        	}
-		}
+      //업로드 가능 파일인지 체크
+      for (var i = 0; i < files.length; i++) {
+        if (!checkExtension(files[i].name, files[i].size)) {
+          return false;
+        }
+      }
       preview(arr);
-    });//file change
-    
-    function checkExtension(fileName,fileSize){
+    }); // change()
 
-      var regex = new RegExp("(.*?)\.(jpg|png|img)$");
-      var maxSize = 52428800;  //50MB
-      
-      if(fileSize >= maxSize){
+    function checkExtension(fileName, fileSize) {
+      var regex = new RegExp('(.*?)\.(jpg|png|img)$');
+      var maxSize = 52428800; //50MB
+
+      if (fileSize >= maxSize) {
         alert('파일 사이즈 초과');
-        $("input[type='file']").val("");  //파일 초기화
+        $("input[type='file']").val(''); //파일 초기화
         return false;
       }
-      
-      if(! (regex.test(fileName))){
+
+      if (!regex.test(fileName)) {
         alert('사진만 등록 가능합니다.');
-        $("input[type='file']").val("");  //파일 초기화
+        $("input[type='file']").val(''); //파일 초기화
         return false;
       }
       return true;
-    }
-    
-    function preview(arr){
-      arr.forEach(function(f){
-        
+    } // checkExtension()
+
+    function preview(arr) {
+      arr.forEach(function (f) {
         //파일명이 길면 파일명...으로 처리
         var fileName = f.name;
-        if(fileName.length > 10){
-          fileName = fileName.substring(0,7)+"...";
+        if (fileName.length > 10) {
+          fileName = fileName.substring(0, 7) + '...';
         }
-        
+
         //div에 이미지 추가
         var str = '<div style="display: inline-flex; padding: 10px;"><li>';
-        str += '<span>'+fileName+'</span><br>';
-        
+        str += '<span>' + fileName + '</span><br>';
+
         //이미지 파일 미리보기
-        if(f.type.match('image.*')){
+        if (f.type.match('image.*')) {
           var reader = new FileReader(); //파일을 읽기 위한 FileReader객체 생성
-          reader.onload = function (e) { //파일 읽어들이기를 성공했을때 호출되는 이벤트 핸들러
+          reader.onload = function (e) {
+            //파일 읽어들이기를 성공했을때 호출되는 이벤트 핸들러
             //str += '<button type="button" class="delBtn" value="'+f.name+'" style="background: red">x</button><br>';
-            str += '<img src="'+e.target.result+'" title="'+f.name+'" width=100 height=100 />';
+            str +=
+              '<img src="' +
+              e.target.result +
+              '" title="' +
+              f.name +
+              '" width=100 height=100 />';
             str += '</li></div>';
             $(str).appendTo('#preview');
-          } 
+          };
           reader.readAsDataURL(f);
-        }else{
-			str += '<img src="/resources/img/fileImg.png" title="'+f.name+'" width=100 height=100 />';
-         	$(str).appendTo('#preview');
+        } else {
+          str +=
+            '<img src="/resources/img/fileImg.png" title="' +
+            f.name +
+            '" width=100 height=100 />';
+          $(str).appendTo('#preview');
         }
-      });//arr.forEach
-    	}
-	});
-	
-	$(function(){
-	      $('#writeBtn').click(function(){
-	    	var loginCheck = '${sessionScope.id}';
-	  		if(loginCheck == ''){
-	  			alert('로그인 후 이용가능합니다.');
-	  			location.href = '${root}index?formpath=home';
-	  			return;
-	  		}
-	    	 
-	    	  
-	         var title = $('#title').val();
-	         if(title == ''){
-	             $('#msg1').css('display', 'block');
-	             $('#title').focus();
-	             return;
-	         }
-	         var content = $('#content').val();
-	         if(content == ''){
-	             $('#msg2').css('display', 'block');
-	             $('#content').focus();
-	             return
-	         }
-	         $('#f').submit();
-	      })
-	      $("#title").blur(function() {
-	         var title = $('#title').val();
-	         if (title != '') {
-	            $('#msg1').css('display', 'none');
-	         }
-	      });
-	      $("#content").blur(function() {
-	         var content = $('#content').val();
-	         if (content != '') {
-	            $('#msg2').css('display', 'none');
-	         }
-	      });
-	   });
-	
+      }); // forEach()
+    } // preview()
+  }); // ready()
+
+  $(function () {
+    $('#writeBtn').click(function () {
+      // 	    	var loginCheck = '${sessionScope.id}';
+      // 	  		if(loginCheck == ''){
+      // 	  			alert('로그인 후 이용가능합니다.');
+      // 	  			location.href = '${root}index?formpath=home';
+      // 	  			return;
+      // 	  		}
+
+      var title = $('#title').val();
+      if (title == '') {
+        $('#msg1').css('display', 'block');
+        $('#title').focus();
+        return;
+      }
+      var content = $('#content').val();
+      if (content == '') {
+        $('#msg2').css('display', 'block');
+        $('#content').focus();
+        return;
+      }
+      $('#f').submit();
+    });
+
+    $('#title').blur(function () {
+      var title = $('#title').val();
+      if (title != '') {
+        $('#msg1').css('display', 'none');
+      }
+    });
+    $('#content').blur(function () {
+      var content = $('#content').val();
+      if (content != '') {
+        $('#msg2').css('display', 'none');
+      }
+    });
+  });
 </script>
 
 </head>

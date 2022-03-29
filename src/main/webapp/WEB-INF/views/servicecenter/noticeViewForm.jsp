@@ -97,7 +97,7 @@
             <div class="bt_wrap">
 			<div>
 			<input type=button style="width: 60px; " value='목록' onclick="location.href='${root}index?formpath=servicecenter&list=notice'"/>
-			<c:if test="${sessionScope.id eq 'admin' }">
+			<c:if test="${sessionScope.id eq 'ADMIN@CARE.COM' }">
 	            <button onclick = "location.href='${root}index?formpath=servicecenter&list=modifyNotice&no=${dto.no }'">수정</button>
 				<button onclick = "deleteCheck()">삭제</button>
 			</c:if>

@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:url var="root" value="/" />
-<c:if test = "${sessionScope.id ne 'admin' }">
+<c:if test = "${sessionScope.id ne 'ADMIN@CARE.COM' }">
 	<script>
 		alert('잘못된 접근입니다.');
 		location.href = '${root}index?formpath=servicecenter&list=faq';
@@ -12,7 +12,7 @@
 	
 <table style="width: 800px; ">
 	<tr>
-		<td style="width: 100px; height:20px;" align="center">no<hr/></td>
+		<td style="width: 100px; height:20px;" align="center">번호<hr/></td>
 		<td style="width: 100px; height:20px;" align="center">문의 유형<hr/></td>
 		<td style="width: 150px; height:150px;" align="center">제목<hr/></td>
 		<td style="width: 80px; height:20px;" align="center">작성자<hr/></td>
@@ -29,7 +29,7 @@
 			<td style="width: 120px; height:40px;" align="center">${list.state }</td>
 		</tr>
 	</c:forEach>
-	<tr><td colspan=5><hr/></td></tr>
+	<tr><td colspan=6><hr/></td></tr>
 </table>
 ${page}
 <form action="${root }index?formpath=servicecenter&list=inquiryAnswer" method="post">

@@ -1,15 +1,18 @@
 package com.care.homin.servicecenter.dto;
 
-//create table inquiry(
-//no number,
-//id varchar2(25),
-//inquirytype varchar2(15),
-//title varchar2(50),
-//content varchar2(300),
-//filename varchar2(200),
-//writedate varchar2(25));
-
-
+/*
+create table inquiry(
+no number,
+id varchar2(25),
+inquirytype varchar2(15),
+title varchar2(50),
+content varchar2(300),
+filename varchar2(200),
+writedate varchar2(25),
+state VARCHAR2(50),
+answer VARCHAR2(300),
+PRIMARY KEY(no));
+ */
 
 public class InquiryDTO {
 	private int no;

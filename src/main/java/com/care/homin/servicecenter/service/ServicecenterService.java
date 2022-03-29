@@ -98,7 +98,7 @@ public class ServicecenterService {
 	}
 	public void viewProc(int no, Model model) {
 		InquiryDTO view = dao.selectInquiry(no);
-		String[] fileName = null;
+		String[] fileName = new String[0];
 		if(view.getFileName() != null && view.getFileName() != "") {
 			fileName = view.getFileName().split(",");
 		}

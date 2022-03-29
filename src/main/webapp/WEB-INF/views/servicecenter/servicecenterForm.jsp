@@ -44,9 +44,9 @@
 						<a class="sub_header_section_faq_item" href = '${root}index?formpath=servicecenter&list=faq'  >FAQ</a>
 					</li>
 					<c:choose>
-						<c:when test="${sessionScope.id eq 'admin' }">
+						<c:when test="${sessionScope.id eq 'ADMIN@CARE.COM' }">
 							<li>
-								<a class="sub_header_section_faq_item" href='${root}index?formpath=servicecenter&list=inquiryAnswer'>1:1 문의</a>
+								<a class="sub_header_section_faq_item" href='${root}index?formpath=servicecenter&list=inquiryAnswer'>문의 답변</a>
 							</li>
 						</c:when>
 						<c:otherwise>
