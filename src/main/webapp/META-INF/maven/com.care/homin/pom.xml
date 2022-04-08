@@ -202,6 +202,7 @@
 				<version>2.4</version>
 			</dependency>   
 			
+			<!-- iamport 결제 -->
 			<dependency>
 				<groupId>com.github.iamport</groupId>
 				<artifactId>iamport-rest-client-java</artifactId>

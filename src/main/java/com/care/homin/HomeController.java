@@ -6,6 +6,7 @@ package com.care.homin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -43,12 +44,12 @@ public class HomeController {
 	public String board() {
 		return "/board/boardForm";
 	}
-	@RequestMapping(value = "/write")
+	@GetMapping(value = "/review")
 	public String write(Model model, String product_img, String category, String order_no) {
 		model.addAttribute("category",category);
 		model.addAttribute("product_img",product_img);
 		model.addAttribute("order_no",order_no);
-		return "/board/writeForm";
+		return "/board/reviewForm";
 	}
 	@RequestMapping(value = "/view")
 	public String view() {

@@ -6,40 +6,79 @@
 	<script>alert('${msg}')</script>
 </c:if>
 <style>
-table {
-	width: 400; height: 200;
+#wrap_addr {
+	padding-top: 20px;
+}
+
+#box_title_addr {
+	width: 570;
+	margin-bottom: 30px;
+}
+
+#wrap_addr h3 {
+	font-size: 40;
+	
+}
+
+#register_addr h3{
+	margin-bottom: 20px;
+}
+
+#info_addr h4 {
+	font-size: 20;
+	margin-bottom: 20px;
+}
+
+#info_addr p {
+	margin-bottom: 15px;
+} 
+
+#info_addr table {
+	width: 500; height: 300;
+}
+
+#info_addr .button{
+	width: 75; height: 30; font-size: 15; border-radius:10px;
+}
+
+#info_addr .button:last-child {
+	margin-left: 10;
 }
 </style>
-<div>
-	<c:import url="mypage/mypageNav.jsp"></c:import>
-	
+
+<div id="wrap_addr">
 	<c:choose>
 		<c:when test="${postCode eq null }">
-			<div>
+			<div id="register_addr">
+				<h3>주소지 등록하기</h3>
 				<div>
-					<h3>주소지 등록하기</h3>
 					<input type="button" value="주소 등록" onclick="location.href='${root}index?formpath=addr/registerAdForm'">
 				</div>
 			</div>
 		</c:when>
 		<c:otherwise>
-			<div>
-				<div>
-					<h3>주소지 관리</h3>
+			<div id="info_addr">
+				<div id="box_title_addr">
+					<h3>주소지 정보</h3>
+					<hr>
 				</div>
 				<section>
-					<table>
-						<tr><td>아이디</td><td>${postCode.id }</td></tr>
-						<tr><td>우편번호</td><td>${postCode.zipcode }</td></tr>
-						<tr><td>주소</td><td>${postCode.addr1 }</td></tr>
-						<tr><td>상세주소</td><td>${postCode.addr2 }</td></tr>
-						<tr>
-							<td colspan="2" align="right">
-								<input type="button" value="수정" onclick="location.href='${root}index?formpath=addr/updateAdForm'">
-								<input type="button" value="주소삭제" onclick="location.href='${root}index?formpath=addr/confirmPw'">
-							</td>
-						</tr>
-					</table>
+					<h4>HOM`IN 회원, 주소지 정보</h4>
+					<p>HOM`IN 홈페이지에서 주소지 정보를 변경할 수 있습니다.</p>
+					<div>
+						<table>
+							<tr><th>아이디</th><td>${postCode.id }</td></tr>
+							<tr><th>우편번호</th><td>${postCode.zipcode }</td></tr>
+							<tr><th>주소</th><td>${postCode.addr1 }</td></tr>
+							<tr><th>상세주소</th><td>${postCode.addr2 }</td></tr>
+							<tr>
+								<td colspan="2" align="right">
+									<input class="button" type="button" value="수정" onclick="location.href='${root}index?formpath=addr/updateAdForm'">
+									<input class="button" type="button" value="주소삭제" onclick="location.href='${root}index?formpath=addr/confirmPw'">
+								</td>
+							</tr>
+						</table>
+					</div>
 				</section>
 			</div>
 		</c:otherwise>

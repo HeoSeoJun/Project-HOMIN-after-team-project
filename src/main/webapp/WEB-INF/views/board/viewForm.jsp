@@ -1,26 +1,30 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/view.css" />   
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/reset.css" />   
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/board.css" />
 <c:url var="root" value="/" />
+
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/reset.css" />   
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/view.css" />   
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/board.css" />
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script>
-	function commentProc(){
-		var commentWrite = $('#comment').val();
-		
+	function loginCheck() {
 		var loginCheck = '${sessionScope.id}';
 		if(loginCheck == ''){
 			alert('로그인 후 이용가능합니다.');
 			document.getElementById('comment').value="";
 			return;
 		}
+	}
+
+	function commentProc(){
+		loginCheck();
 		
+		var commentWrite = $('#comment').val();	
 		if(commentWrite == ''){
 			 $('#comment').focus();
 				return;
-			}
+		}
+		
 		var co = document.getElementById('comment').value;
 		var c = {comment:co}
 		$.ajax({
@@ -36,7 +40,7 @@
 				alert("문제")
 			}
 		})
-	}
+	} // commentProc
 	
 	function commentDelete(num){
 		 if (confirm("정말 삭제하시겠습니까?") == true){ 
@@ -54,8 +58,19 @@
 		 }else{   
 		     return false;
 		 }
-	}
+	} // commentDelete
 </script>
+
+<style>
+#btn_deleteComment {
+	width: 70px;
+	height: 30px;
+	border-radius: 5px;
+	background-color: black;
+	color: white;
+}
+
+</style>
 
 <center>
 <section class="content_section">
@@ -65,7 +80,7 @@
  <div class="board_wrap">
         <div class="board_title">
         <strong>review</strong> 
-        <hr style="width : 50px;">
+        <hr style="width : 150px;">
         <p>상품 사용 후기입니다.</p>
      	 </div>
       
@@ -98,20 +113,20 @@
                 </div>
             </div>
             
+            <!-- 후기 내용 -->    
+            <div class="cont">
+                ${view.content }
+            </div>
+
             <!-- 이미지 사진  -->
-            
-            <c:forEach var="file" items="${fileName }"> 
-				<div> 
-				<img src = "${file }" style="width: 500px; height: 500px;"> 
-				</div>
- 			</c:forEach>
-            
-            <!-- 글자  -->    
-                <div class="cont">
-                    ${view.content }
-                </div>
-                
-                
+            <div id="div_img_review">
+	            <c:forEach var="file" items="${fileName }"> 
+					<div> 
+						<img src = "${file }" style="height: 200px;"> 
+					</div>
+	 			</c:forEach>
+            </div>            
+ 			
             <div class="board-comment-wrap">
             	<p>댓글</p>
 			<div class= "board-comment-text">
@@ -134,14 +149,14 @@
 							<div class="comment-log_review_ch2">
 								<div>${com.comment_content }</div>
 							</div>
-						<div class="comment-log_review_bottom_wrap">
-							<div>${com.writetime }</div>
-							
-						<c:if test = "${sessionScope.id eq com.id || sessionScope.id eq 'admin'}">
-							<div  onclick = "commentDelete(${com.comment_no})">삭제</div>
-
-						</c:if>
-						</div>		
+							<div class="comment-log_review_bottom_wrap">
+								<div>${com.writetime }</div>
+								
+								<c:if test = "${sessionScope.id eq com.id || sessionScope.id eq 'ADMIN@CARE.COM'}">
+<%-- 									<div  onclick = "commentDelete(${com.comment_no})">삭제</div> --%>
+									<input id="btn_deleteComment" type="button" value="삭제" onclick = "commentDelete(${com.comment_no})">
+								</c:if>
+							</div>		
 					    </div>
 						
 						</c:forEach>
@@ -160,11 +175,11 @@
             
           
             
-            <div class="bt_wrap">
+         <div class="bt_wrap">
              <div>
 <%--              <input type=button style="width: 60px; " value='후기작성' onclick="location.href='${root}index?formpath=write'"/>  --%>
 			<c:if test = "${sessionScope.id eq view.id }">
-				<button formaction="${root }index?formpath=boardModifyCheck" style="width: 60px; ">수정</button>
+				<button formaction="${root }index?formpath=boardModifyCheck?" style="width: 60px; ">수정</button>
 				<button formaction="${root }index?formpath=boardDelete" style="width: 60px; ">삭제</button>
 			</c:if>
 			</div>

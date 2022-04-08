@@ -15,6 +15,7 @@ public class CommentDTO {
 	private int board_no;
 	private String writetime;
 	private int comment_no;
+	
 	public String getId() {
 		return id;
 	}

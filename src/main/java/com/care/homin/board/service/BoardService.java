@@ -35,7 +35,7 @@ public class BoardService {
 		String category = req.getParameter("category");
 		String product_img = req.getParameter("product_img");
 		String order_no = req.getParameter("order_no");
-		System.out.println(req.getParameter(order_no));
+//		System.out.println(req.getParameter(order_no));
 		BoardDTO dto = new BoardDTO();
 		UUID uuid = UUID.randomUUID();
 		int review_star = Integer.parseInt(req.getParameter("review_star"));
@@ -49,9 +49,9 @@ public class BoardService {
 		dto.setContent(content);
 		if(dto.getId() == null || dto.getId() == "")
 			dto.setId("test");
+		
 		List<MultipartFile> files = req.getFiles("uploadFile");
 		String fname = "";
-		
 		for(MultipartFile mf : files) {
 			if(mf.getSize() != 0) {
 				String fileName = mf.getOriginalFilename();
@@ -73,15 +73,15 @@ public class BoardService {
 		dto.setClassification(category);
 		dto.setOrder_no(order_no);
 		dao.writeProc(dto);
-		
 	}
+	
 	public void boardProc(Model model, int currentPage, HttpServletRequest req, String search, String select) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("search", search);
 		map.put("select", select);
 		
 		int totalCount = dao.boardCount(map);
-		int pageBlock = 10;
+		int pageBlock = 5;
 		int end = currentPage * pageBlock;
 		int begin = end + 1 - pageBlock;
 

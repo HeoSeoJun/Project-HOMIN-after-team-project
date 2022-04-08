@@ -41,6 +41,19 @@
 		UPDATE homin_board SET hit=hit+1 WHERE no=#{no}
 	</update>
 	
+	<select id="getFileName" parameterType="int" resultType="String">
+		SELECT filename FROM homin_board WHERE no=#{no}
+	</select>
+	
+	<delete id="deleteBoard" parameterType="int">
+		DELETE FROM homin_board WHERE no=#{no}
+	</delete>
+		
+	<update id="modifyProc" parameterType="com.care.homin.board.dto.BoardDTO" >
+		UPDATE homin_board SET title=#{title}, content=#{content}, hit=#{hit}, writeTime=#{writeTime}, fileName=#{fileName}, review_star=#{review_star} WHERE no=#{no}
+	</update>
+	
+	<!-- comment -->
 	<insert id="commentProc" parameterType="com.care.homin.board.dto.CommentDTO">
 		<selectKey keyProperty="comment_no" resultType="int" order="BEFORE">
 			SELECT nvl(max(comment_no), 0)+1 FROM homboard_comment
@@ -52,22 +65,11 @@
 		SELECT * FROM homboard_comment WHERE board_no=#{no}
 	</select>
 	
-	<select id="getFileName" parameterType="int" resultType="String">
-		SELECT filename FROM homin_board WHERE no=#{no}
-	</select>
-	
-	<delete id="deleteBoard" parameterType="int">
-		DELETE FROM homin_board WHERE no=#{no}
-	</delete>	
-	
 	<delete id="deleteComment" parameterType="int">
 		DELETE FROM homboard_comment WHERE comment_no=#{no}
 	</delete>	
 	
-	<update id="modifyProc" parameterType="com.care.homin.board.dto.BoardDTO" >
-		UPDATE homin_board SET title=#{title}, content=#{content}, hit=#{hit}, writeTime=#{writeTime}, fileName=#{fileName}, review_star=#{review_star} WHERE no=#{no}
-	</update>
-
+	
 	<select id = "pwCheck" resultType = "com.care.homin.login.dto.LoginDTO">
 		SELECT * FROM login_homin WHERE id=#{id}
 	</select>

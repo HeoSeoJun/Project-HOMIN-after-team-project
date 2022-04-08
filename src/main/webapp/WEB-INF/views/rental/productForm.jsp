@@ -15,7 +15,7 @@ prefix="c"%>
   function basketProduct(no) {
     checkLogin();
 
-    var d = { noTemp: no };
+    var d = { "noTemp": no };
     $.ajax({
       url: "basketProduct",
       type: "POST",
@@ -30,32 +30,52 @@ prefix="c"%>
       },
     });
   }
+  
   function checkLogin() {
     var id = "${sessionScope.id}";
     if (id == "") {
       alert("먼저 로그인해주세요");
       location.href = "${root}index?formpath=login";
     } else {
-    	location.href='${root}index?formpath=productOrder&prodNo=${product.product_no }'
+    	location.href = "${root }index?formpath=rental&category=${category}";
     }
+  }
+  
+  function viewOrderForm(no) {
+	  var id = "${sessionScope.id}";
+	    if (id == "") {
+	      alert("먼저 로그인해주세요");
+	      location.href = "${root}index?formpath=login";
+	    } else {
+		  location.href="${root}index?formpath=productOrder&prodNo="+no;
+	    }
   }
 </script>
 
 <style>
-  .swiper-button-next {
-    background: url(/godiva/img/common/next.png) no-repeat;
-    background-size: 50% auto;
-    background-position: center;
-  }
+.swiper-button-next {
+  background: url(/godiva/img/common/next.png) no-repeat;
+  background-size: 50% auto;
+  background-position: center;
+}
 
-  .swiper-button-prev {
-    background: url(/godiva/img/common/prev.png) no-repeat;
-  }
+.swiper-button-prev {
+  background: url(/godiva/img/common/prev.png) no-repeat;
+}
 
-  .swiper-button-next::after,
-  .swiper-button-prev::after {
-    display: none;
-  }
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  display: none;
+}
+
+.product_selling_text_btn_bt1 {
+	cursor: pointer;
+}
+.product_selling_text_btn_bt2 {
+	cursor: pointer;
+}
+
+
 </style>
 
 <div class="rental-detail-header">
@@ -67,44 +87,34 @@ prefix="c"%>
     <c:choose>
       <c:when test="${category eq 'dryer' }">
         <li>
-          <a href="${root }index?formpath=rental&category=${category}"
-            >건조기</a
-          >
+          <a href="${root }index?formpath=rental&category=${category}">건조기</a>
         </li>
       </c:when>
       <c:when test="${category eq 'waterpurifier' }">
         <li>
-          <a href="${root }index?formpath=rental&category=${category}"
-            >정수기</a
-          >
+          <a href="${root }index?formpath=rental&category=${category}">정수기</a>
         </li>
       </c:when>
       <c:when test="${category eq 'aircleaner' }">
         <li>
-          <a href="${root }index?formpath=rental&category=${category}"
-            >공기청정기</a
-          >
+          <a href="${root }index?formpath=rental&category=${category}">공기청정기</a>
+            
         </li>
       </c:when>
       <c:when test="${category eq 'washmachine' }">
         <li>
-          <a href="${root }index?formpath=rental&category=${category}"
-            >식기세척기</a
-          >
+          <a href="${root }index?formpath=rental&category=${category}">식기세척기</a>
+            
         </li>
       </c:when>
       <c:when test="${category eq 'microwave' }">
         <li>
-          <a href="${root }index?formpath=rental&category=${category}"
-            >전기레인지</a
-          >
+          <a href="${root }index?formpath=rental&category=${category}">전기레인지</a>
         </li>
       </c:when>
       <c:otherwise>
         <li class="rental-header-text">
-          <a href="${root }index?formpath=rental&category=${category}"
-            >얼음정수기 냉장고</a
-          >
+          <a href="${root }index?formpath=rental&category=${category}">얼음정수기 냉장고</a>
         </li>
       </c:otherwise>
     </c:choose>
@@ -169,9 +179,9 @@ prefix="c"%>
             class="product_selling_text_btn_bt1"
             id="check_module"
             type="button"
-            onclick="checkLogin()"
-          >
-            이용 신청
+            onclick="viewOrderForm('${product.product_no }');"
+            >대여 하기
+<!--             onclick="checkLogin();" -->
           </button>
         </div>
         <div class="product_selling_text_btn_b">
@@ -211,23 +221,23 @@ prefix="c"%>
 	  <div class="detail_1">
 	  <img  class="main-product-tex-in-cart" src="https://allcenter.speedgabia.com/homin/common/benefit.jpg" alt="케어솔루션 고객혜택">
 	  </div>
-	  
   </div>
-  <script>
-    var mySwiper = new Swiper(".swiper-container", {
-      navigation: {
-        prevEl: ".swiper-button-prev",
-        nextEl: ".swiper-button-next",
-      },
-      /* autoplay : {
-			delay : 2000,
-			disableOnInteraction: false,
-		}, */
-      pagination: {
-        el: ".swiper-pagination",
-        type: "bullets",
-        clickable: true,
-      },
-    });
-  </script>
 </section>
+
+<script>
+  var mySwiper = new Swiper(".swiper-container", {
+    navigation: {
+      prevEl: ".swiper-button-prev",
+      nextEl: ".swiper-button-next",
+    },
+    /* autoplay : {
+	delay : 2000,
+	disableOnInteraction: false,
+}, */
+    pagination: {
+      el: ".swiper-pagination",
+      type: "bullets",
+      clickable: true,
+    },
+  });
+</script>

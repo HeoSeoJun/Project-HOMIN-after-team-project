@@ -1,12 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/reset.css" />
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/rental.css" />
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/index.css" />
 <c:url var="root" value="/" />
-<div class="rental-header">
-
-	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script>
 	function basketProduct(no) {
 		checkLogin();
@@ -46,7 +45,11 @@
 }
 </style>
 
-		<!-- 배너 -->
+<div class="rental-header">
+
+
+
+		<!-- 탑 이미지 배너 -->
 		<c:choose>
 
 			<c:when test="${category eq 'dryer' }">
@@ -56,7 +59,7 @@
 			</c:when>
 			<c:when test="${category eq 'waterpurifier' }">
 				<div class="top_img_banner">
-					<img src="https://pubfiles.lghomin.com/files/images/00/6c15fe5489144368885504b7a9a672a8/6d4aa27735544d298ba165d506899a14.jpg">
+					<img src="https://pubfiles.lghomin.com/files/images/00/6c15fe5489144368885504b7a9a672a8/abdd893365da4e288011bb033781e033.jpg">
 				</div>
 			</c:when>
 			<c:when test="${category eq 'aircleaner' }">
@@ -84,8 +87,7 @@
 		
 		<!-- 카테고리 -->
 		
-		<div class="lent_option-wrap" style="padding:0; display:none" >
-		<!-- 카테고리 임시로 안보이게 해놓음 -->
+		<div class="lent_option-wrap">
 		
 			<div class="lent_option_box">
 			
@@ -144,42 +146,44 @@
 
 
 <section class="container-home-section">
-<c:forEach var="pr" items="${product }">
-	<div  class="main-product-list" onclick="location.href='${root}index?formpath=product&category=${category }&prodNo=${pr.product_no }'">
-		<div class="main-product-list-in">
-			<ul>
-				<li>
-					<div class="main-product-text ">
-						<div class="main-product-tex-in ">
-						<img  class="main-product-tex-in-cart" src="${pageContext.request.contextPath}/resources/image/cart3.png"
-						style="border: none;
-							    right: 20px;
-							    width: 30px;
-							    height: 30px;
-							    cursor: hand;
-							    filter: alpha(opacity=1);
-							    position: absolute;
-							    bottom: 20px;
-							    border-radius: none;
-							    z-index: 100;"		 >
-						<button name="test" type="button" onclick="basketProduct('${pr.product_no }' );"></button>
-							<img src="${root }resources/image/${pr.classification }/${pr.product_filename}" >
-						</div>
-						<div>
-							<div class="pro-category">${pr.product_no }</div>
-							<div class="pro-name">${pr.product_name }</div>
-							<div class="pro-price">
-								<div>
-									<span>월</span> <span>${pr.price }</span> <span>원</span>
+	<c:forEach var="pr" items="${product }">
+		<div  class="main-product-list" >
+			<div class="main-product-list-in">
+				<ul>
+					<li>
+						
+						<div class="main-product-text ">
+							<div class="main-product-tex-in ">
+								<img  class="main-product-tex-in-cart" src="${pageContext.request.contextPath}/resources/image/cart3.png"
+									style="border: none;
+										    right: 20px;
+										    width: 30px;
+										    height: 30px;
+										    cursor: hand;
+										    filter: alpha(opacity=1);
+										    position: absolute;
+										    bottom: 20px;
+										    border-radius: none;
+										    z-index: 100;"		 
+									    onclick="basketProduct('${pr.product_no }' );">
+								<img src="${root }resources/image/${pr.classification }/${pr.product_filename}" >
+							</div>
+							
+							<div style="cursor: pointer;" onclick="location.href='${root}index?formpath=product&category=${category }&prodNo=${pr.product_no }'">
+								<div class="pro-category">${pr.product_no }</div>
+								<div class="pro-name">${pr.product_name }</div>
+								<div class="pro-price">
+									<div>
+										<span>월</span> <span>${pr.price }</span> <span>원</span>
+									</div>
 								</div>
 							</div>
-						</div>
-					</div>						
-					
-				</li>	
-			</ul>
+						</div>						
+						
+					</li>	
+				</ul>
+			</div>
 		</div>
-	</div>
-</c:forEach>
+	</c:forEach>
 </section>
 

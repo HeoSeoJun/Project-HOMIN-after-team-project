@@ -9,14 +9,6 @@
 		SELECT * FROM homin_product WHERE product_no=#{prodNo}
 	</select>
 	
-	<insert id="orderHistoryProc" parameterType="com.care.homin.rental.dto.orderDTO">
-		INSERT INTO homin_order VALUES(#{uid},#{name},#{email},#{tell},#{addr},#{postcode},#{productName},#{amount},#{buyer_id},#{productImg},#{classification},#{product_no})
-	</insert>
-	
-	<select id="selectOrderHistory" parameterType="String" resultMap="order">
-		SELECT * FROM homin_order WHERE imp_uid=#{no}
-	</select>
-	
 	<select id="selectProductImg" parameterType="String" resultType = "String">
 		SELECT product_filename FROM homin_product WHERE product_name =#{productName}
 	</select>
@@ -24,20 +16,6 @@
 	<select id="selectClassification" parameterType="String" resultType = "String">
 		SELECT classification FROM homin_product WHERE product_name =#{productName}
 	</select>
-	
-	<resultMap type="com.care.homin.rental.dto.orderDTO" id="order">
-		<result property="uid" column="IMP_UID"/>
-		<result property="email" column="BUYER_EMAIL"/>
-		<result property="addr" column="BUYER_ADDR"/>
-		<result property="postcode" column="BUYER_POSTCODE"/>
-		<result property="name" column="BUYER_NAME"/>
-		<result property="tell" column="BUYER_TELL"/>
-		<result property="amount" column="PRODUCT_AMOUNT"/>
-		<result property="productName" column="PRODUCT_NAME"/>
-		<result property="buyer_id" column="BUYER_ID"/>
-		<result property="productImg" column="PRODUCTIMG"/>
-		<result property="product_no" column="product_no"/>
-	</resultMap>
 	
 	<update id="productUpHit" parameterType="String" >
 		UPDATE homin_product SET hit=hit+1 WHERE product_no=#{product_no}
@@ -55,12 +33,35 @@
 		SELECT * FROM (SELECT * FROM homin_product order by ordercount desc) <![CDATA[ WHERE ROWNUM <= 4]]> 
 	</select>
 	
+	<delete id="deleteProduct" parameterType="String">
+		DELETE FROM homin_product WHERE product_no=#{no}
+	</delete>
+	
+	<insert id="orderHistoryProc" parameterType="com.care.homin.rental.dto.orderDTO">
+		INSERT INTO homin_order VALUES(#{uid}, #{email}, #{addr}, #{postcode}, #{name}, #{tell}, #{amount}, #{productName}, #{buyer_id},#{productImg}, #{product_no}, #{classification})
+	</insert>
+	
+	<resultMap type="com.care.homin.rental.dto.orderDTO" id="order">
+		<result property="uid" column="IMP_UID"/>
+		<result property="email" column="BUYER_EMAIL"/>
+		<result property="addr" column="BUYER_ADDR"/>
+		<result property="postcode" column="BUYER_POSTCODE"/>
+		<result property="name" column="BUYER_NAME"/>
+		<result property="tell" column="BUYER_TELL"/>
+		<result property="amount" column="PRODUCT_AMOUNT"/>
+		<result property="productName" column="PRODUCT_NAME"/>
+		<result property="buyer_id" column="BUYER_ID"/>
+		<result property="productImg" column="PRODUCTIMG"/>
+		<result property="product_no" column="product_no"/>
+		<result property="classification" column="classification"/>
+	</resultMap>
+	<select id="selectOrderHistory" parameterType="String" resultMap="order">
+		SELECT * FROM homin_order WHERE imp_uid=#{no}
+	</select>
+	
 	<delete id="cancleOrder" parameterType="String">
 		DELETE FROM homin_order WHERE IMP_UID=#{uid}
 	</delete>
 	
-	<delete id="deleteProduct" parameterType="String">
-		DELETE FROM homin_product WHERE product_no=#{no}
-	</delete>
 
 </mapper>

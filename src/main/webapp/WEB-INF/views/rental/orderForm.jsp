@@ -4,41 +4,46 @@
 <c:url var="root" value="/" />
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.8.js"></script>
+
 <style>
-	.mainText{font-size: 40px; margin-bottom: 30px; margin-top: 15px;}
-	.itemImg{width: 300px; height: 300px;}
-	.item_area{display: flex; flex-direction: row;}
-	.orderItem{width: 800px; margin: 0 auto; border: 1px solid #EAEAEA; border-radius: 15px; margin-top: 15px;}
-	.order_Btn{width: 100%; margin: 50px auto; display: flex; justify-content: space-around; 
-				background:purple;  border:0; font-size:25px;
-				border-radius: 150px; width: 300px; height: 65px; color: white;}
-	.item_info{margin-top: 20px;}
-	.item_price{color: #D9418C;}
+	.mainText {font-size: 35px; margin-bottom: 30px;}
+	.itemImg {width: 150px; }
+	.item_area {display: flex; flex-direction: row;}
+	.orderItem {width: 800px; margin: 0 auto; border: 1px solid #EAEAEA; border-radius: 15px; margin-top: 15px;}
+	.order_Btn {width: 100%; margin: 50px auto; display: flex; justify-content: space-around; cursor:pointer;
+				background:black; color: white; border:0; font-size:25px;
+				border-radius: 150px; width: 300px; height: 65px; }
+	.item_info {margin-top: 20px;}
+	.item_price {color: #D9418C;}
 	.item_no, .item_name, .item_price{margin-bottom: 15px;}
 </style>
-<div class = "mainText">가입 예정 상품</div>
-<hr/>
-<div class = "orderItem">
-	<div class = "item_area">
-		<div class = "itemImg">
-			<img class = "itemImg" src = "${root }resources/image/${productInfo.classification }/${productInfo.product_filename}">
+
+<div>
+	<div class = "mainText">가입 예정 상품</div>
+	<hr/>
+	<div class = "orderItem">
+		<div class = "item_area">
+			<div class = "itemImg">
+				<img class = "itemImg" src = "${root }resources/image/${productInfo.classification }/${productInfo.product_filename}">
+			</div>
+			<div class = "item_info">
+				<div class = "item_no">${productInfo.product_no }</div>
+				<div class = "item_name"><strong>${productInfo.product_name }</strong></div>
+				<div class = "item_price"><strong>${productInfo.price }원</strong></div>
+			</div>
 		</div>
-		<div class = "item_info">
-			<div class = "item_no">${productInfo.product_no }</div>
-			<div class = "item_name"><strong>${productInfo.product_name }</strong></div>
-			<div class = "item_price"><strong>${productInfo.price }원</strong></div>
-		</div>
+	</div>
+	<div>
+		<input type = "button" class = "order_Btn" value = "신 청" onclick = "iamport()">
 	</div>
 </div>
-	<div>
-		<input type = "button" class = "order_Btn" onclick = "iamport()" value = "신청하기">
-	</div>
 
 <script>
-function iamport(){
+function iamport() {
 	//가맹점 식별코드
-	IMP.init('imp15192515');
-	IMP.request_pay({
+// 	IMP.init('imp15192515');
+	IMP.init('imp65071671'); // mine
+	IMP.request_pay({ // param
 	    pg : 'inicis',
 	    pay_method : 'card',
 	    merchant_uid : 'merchant_' + new Date().getTime(),
@@ -61,13 +66,13 @@ function iamport(){
         	if(rsp.paid_amount == data.response.amount){
         		var d = {
         	    		uid : data.response.impUid,
-        	    		buyerpostcode : data.response.buyerPostcode,
-        	    		buyername : data.response.buyerName,
         	    		email : data.response.buyerEmail,
-        	    		addr : data.response.buyerAddr,
+        	    		buyername : data.response.buyerName,
         	    		tell : data.response.buyerTel,
-        	    		amount : data.response.amount,
-        	    		name : data.response.name
+        	    		addr : data.response.buyerAddr,
+        	    		buyerpostcode : data.response.buyerPostcode,
+        	    		name : data.response.name,
+        	    		amount : data.response.amount
         	   		}
 	        	$.ajax({
 	            	url : "orderDB?prNo=${productInfo.product_no}",
@@ -78,13 +83,13 @@ function iamport(){
 	        			location.href = "${root}index?formpath=orderfinish&no="+data.response.impUid+"&prodNo=${productInfo.product_no}";
 					},
 					error : function(){
-						alert("문제")
+						alert("문제");
 					}
-	        	});
+	        	}); // ajax
         	} else {
         		alert("결제 실패");
         	}
-        });
+        }); // done
 	});
-}
+} // iamport
 </script>

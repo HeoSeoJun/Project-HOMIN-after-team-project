@@ -13,9 +13,6 @@ public class BoardDTO{
 	private String classification;
 	private String order_no;
 	
-	
-	
-	
 	public String getOrder_no() {
 		return order_no;
 	}

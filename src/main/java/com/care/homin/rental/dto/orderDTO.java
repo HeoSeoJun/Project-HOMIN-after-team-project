@@ -2,17 +2,20 @@ package com.care.homin.rental.dto;
 
 public class orderDTO {
 	private String uid;
+	
 	private String email;
 	private String addr;
 	private String postcode;
 	private String name;
 	private String tell;
+	
+	private String buyer_id;
+	
+	private String product_no;
 	private String amount;
 	private String productName;
-	private String buyer_id;
 	private String productImg;
 	private String classification;
-	private String product_no;
 	
 	
 	public String getProduct_no() {

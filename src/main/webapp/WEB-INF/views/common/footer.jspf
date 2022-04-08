@@ -1,8 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 
-<center>
-<hr/>
-<h5>
-Copyright ⓒ CARE Lab. All rights reserved.
-</h5>
+<center style="margin-top: 20px; line-height: 50px;">
+	<hr/>
+	<h5>Copyright ⓒ HOM`IN. All rights reserved.</h5>
 </center>

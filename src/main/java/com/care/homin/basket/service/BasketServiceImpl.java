@@ -2,9 +2,12 @@ package com.care.homin.basket.service;
 
 import java.util.ArrayList;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.care.homin.basket.BasketController;
 import com.care.homin.basket.dao.IBasketDAO;
 import com.care.homin.basket.dto.BasketDTO;
 import com.care.homin.rental.dto.RentalDTO;
@@ -15,6 +18,7 @@ public class BasketServiceImpl implements IBasketService{
 	
 	@Override
 	public String  basketProduct(String no, String id) {
+		
 		RentalDTO dto = basketDao.searchProduct(no);
 		String result = "";
 		if (dto != null) {

@@ -9,6 +9,11 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <link
   rel="stylesheet"
   type="text/css"
+  href="${pageContext.request.contextPath}/resources/css/reset.css"
+/>
+<link
+  rel="stylesheet"
+  type="text/css"
   href="${pageContext.request.contextPath}/resources/css/board2.css"
 />
 <link
@@ -16,11 +21,7 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
   type="text/css"
   href="${pageContext.request.contextPath}/resources/css/board.css"
 />
-<link
-  rel="stylesheet"
-  type="text/css"
-  href="${pageContext.request.contextPath}/resources/css/reset.css"
-/>
+
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script>
   function loginForm() {
@@ -44,7 +45,7 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 	});
 	
 </script>
-<div id="wrap" style="width: 1200px">
+<div id="wrap">
   <section class="info_section">
     <div>
       <ul class="info_list">
@@ -72,16 +73,24 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
               >
             </li>
             <li>|</li>
-            <c:if test="${sessionScope.id ne 'admin' }">
+            <c:if test="${sessionScope.id ne 'ADMIN@CARE.COM' }">
 	            <li>
-	              <a href="${root }index?formpath=mypage">${sessionScope.nickname }님
+	              <a href="${root }index?formpath=mypage&category=mypageIndex">${sessionScope.nickname } 님
 	                <img src="${pageContext.request.contextPath}/resources/image/account_circle.png"/>
 	              </a>
 	            </li>
+	            <li>|</li>
+	            <li>
+	              <a href="${root }index?formpath=mypage&category=myBasket">장바구니
+	                <img style="height:25px"
+	                  src="${pageContext.request.contextPath}/resources/image/cart3.png"
+	                />
+	              </a>
+	            </li>
             </c:if>
-            <c:if test="${sessionScope.id eq 'admin' }">
+            <c:if test="${sessionScope.id eq 'ADMIN@CARE.COM' }">
             	<li>
-	            	<a href = "#"><label class = "menu_li">${sessionScope.nickname }님</label>
+	            	<a href = "${root }index?formpath=mypage"><label class = "menu_li">${sessionScope.nickname } 님</label>
 	            		 <img src="${pageContext.request.contextPath}/resources/image/account_circle.png"/>
 	            	</a>
 	            	<ul class = "sub_li">
@@ -90,13 +99,6 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 	            	</ul>
             	</li>
             </c:if>
-            <li>
-              <a href="${root }index?formpath=basket">
-                <img style="height:25px"
-                  src="${pageContext.request.contextPath}/resources/image/cart3.png"
-                />
-              </a>
-            </li>
           </c:otherwise>
         </c:choose>
       </ul>
@@ -125,27 +127,5 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
         />
       </a>
     </h1>
-
-    <nav class="nav" style="display: none">
-      <ul class="gnb">
-        <li>
-          <a href="index.html">인테리어</a
-          ><span class="sub_menu_toggle_btn">하위 메뉴 토글 버튼</span>
-        </li>
-        <li>
-          <a href="introudce.html">렌탈/케어</a
-          ><span class="sub_menu_toggle_btn">하위 메뉴 토글 버튼</span>
-        </li>
-        <li>
-          <a href="gallery.html">생활용품</a
-          ><span class="sub_menu_toggle_btn">하위 메뉴 토글 버튼</span>
-        </li>
-        <li>
-          <a href="board.html">문의사항</a
-          ><span class="sub_menu_toggle_btn">하위 메뉴 토글 버튼</span>
-        </li>
-      </ul>
-    </nav>
-    <span class="menu_toggle_btn">전체 메뉴 토글 버튼</span>
   </header>
 </div>

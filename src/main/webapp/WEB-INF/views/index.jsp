@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="${pageContext.request.contextPath}/resources/css/reset.css"
+/>
 <c:if test="${not empty msg }">
 	<script>
 		alert('${msg}');
@@ -8,18 +13,12 @@
 </c:if>
 <html>
 <body>
-<div align="center">
-	<table style="width:800px;">
-		<tr>
-			<td style="height:100px;"><%@ include file="common/top.jsp" %></td>
-		</tr>
-		<tr>
-			<td style="height:400px;"><c:import url="/${formpath }" /> </td>
-		</tr>
-		<tr>
-			<td style="height:50px;"><%@ include file="common/footer.jspf" %></td>
-		</tr>
-	</table>
+	<div align="center">
+		<table style="width: 1200px;">
+			<tr><td><%@ include file="common/top.jsp" %></td></tr>
+			<tr><td><c:import url="/${formpath }" /></td></tr>
+			<tr><td><%@ include file="common/footer.jspf" %></td></tr>
+		</table>
 	</div>
 </body>
 </html>

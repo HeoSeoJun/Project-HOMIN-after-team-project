@@ -1,7 +1,7 @@
 @charset "utf-8";
 
 .lent_option-wrap{
-	padding: 50 0px;
+	padding-top: 50px;
 	display: flex;
     justify-content: space-around;
     flex: auto;
@@ -12,13 +12,13 @@
 }
 
 .lent_option_box {
-	padding: 30 35 30 35;
+/* 	padding: 30 35 30 35; */
 /*     border: 10px solid #ffe1b2; */
     margin: 4px;
 /*     border: 1px solid #eee; */
     border-radius: 20px;
     height: 240px;
-    padding: 42px 50px 0;
+/*     padding: 42px 50px 0; */
     display: flex;
     justify-content: flex-start;
     flex-direction: column;

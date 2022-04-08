@@ -1,14 +1,10 @@
 <%@ page contentType="text/html; charset=UTF-8"    %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
-   
+<c:url var="root" value="/" />
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/faq.css" />
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/review.css" />   
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/reset.css" />   
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/board.css" />   
-
-
-<c:url var="root" value="/" />
 
 <script>
 	function boardDeleteCheck(no){
@@ -23,12 +19,10 @@
 <center>
 <section class="content_section">
 
-
-
  	 <div class="board_wraps">  
  	 <div class="board_title">
         <strong>review</strong> 
-        <hr style="width : 50px;">
+        <hr style="width : 140px;">
         <p>상품 사용 후기입니다.</p>
       </div>
       <div class="board_list_wrap" style="width: 1200px;">
@@ -41,7 +35,7 @@
             <div class="writer">카테고리</div>
             <div class="date">작성일</div>
             <div class="count">조회</div>
-            <c:if test="${sessionScope.id eq 'admin' }">
+            <c:if test="${sessionScope.id eq 'ADMIN@CARE.COM' }">
             	<div>삭제</div>
             </c:if>
           </div>
@@ -52,12 +46,12 @@
             <div class="num">${list.no }</div>
             <div class="photo"><img src = "${root }resources/image/${list.classification}/${list.product_img}" style="width: 150px; height: 150px;"></div>
             <c:choose>
-			<c:when test="${list.fileName eq null || list.fileName eq ''}">
-				<div id="${list.no }" class="title"><a href = 'viewProc?num=${list.no }'>${list.title }</a></div>
-			</c:when>
-			<c:otherwise>
-				<div id="${list.no }" class="title"><a href = 'viewProc?num=${list.no }'>${list.title }  <img src = "${root }resources/image/img.png" style="width: 15px; height: 15px;"></a></div>
-			</c:otherwise>
+				<c:when test="${list.fileName eq null || list.fileName eq ''}">
+					<div id="${list.no }" class="title"><a href = 'viewProc?num=${list.no }'>${list.title }</a></div>
+				</c:when>
+				<c:otherwise>
+					<div id="${list.no }" class="title"><a href = 'viewProc?num=${list.no }'>${list.title }  <img src = "${root }resources/image/img.png" style="width: 15px; height: 15px;"></a></div>
+				</c:otherwise>
 			</c:choose>
 			<c:choose>
 				<c:when test="${list.review_star eq 1 }">
@@ -95,11 +89,11 @@
            		<c:when test="${list.classification eq 'microwave' }">
            			<div class="writer">전기레인지</div>
            		</c:when>
-           		
             </c:choose>
+            
             <div class="date">${list.writeTime }</div>
             <div class="count">${list.hit }</div>
-            <c:if test="${sessionScope.id eq 'admin' }">
+            <c:if test="${sessionScope.id eq 'ADMIN@CARE.COM' }">
             	<input type = "button" value = "삭제" onclick = "boardDeleteCheck(${list.no})">
             </c:if>
           </div>

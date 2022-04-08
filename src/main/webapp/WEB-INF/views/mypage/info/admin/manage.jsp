@@ -14,8 +14,6 @@ table {
 }
 </style>
 <div>
-	<c:import url="mypage/mypageNav.jsp"></c:import>
-		
 	<div>
 		<div>
 			<h3>회원 목록</h3>

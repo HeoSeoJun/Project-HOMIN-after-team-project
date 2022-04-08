@@ -34,7 +34,8 @@ public class RentalController {
 	
 	// 토큰 발급
 	public RentalController() {
-		this.api = new IamportClient("4550188229898136","d14634a7203799f7081d4658664899c7e241ecea4eda82144d32e27c1b36c50bd17fbe0c137cd0d4");
+//		this.api = new IamportClient("4550188229898136","d14634a7203799f7081d4658664899c7e241ecea4eda82144d32e27c1b36c50bd17fbe0c137cd0d4");
+		this.api = new IamportClient("5783417635788718","e6dfb08ac819d4d20df552145078731faaecc0d0d5b45aca9031d6adc74007fb2c10c935728635ba"); // mine
 	}
 	
 	@ResponseBody
@@ -49,21 +50,23 @@ public class RentalController {
 	}
 	@ResponseBody
 	@RequestMapping(value="/orderDB")
-	public void orderDB(@RequestBody Map<String,String> d,String prNo) {
+	public void orderDB(@RequestBody Map<String,String> d, String prNo) {
 		orderDTO dto = new orderDTO();
 		dto.setUid(d.get("uid"));
 		dto.setEmail(d.get("email"));
-		dto.setAddr(d.get("addr"));
-		dto.setPostcode(d.get("buyerpostcode"));
 		dto.setName(d.get("buyername"));
 		dto.setTell(d.get("tell"));
+		dto.setAddr(d.get("addr"));
+		dto.setPostcode(d.get("buyerpostcode"));
 		dto.setAmount(d.get("amount"));
 		dto.setProductName(d.get("name"));
 		dto.setBuyer_id((String)session.getAttribute("id"));
+		
 		String productImg = service.selectProductImg(d.get("name"));
 		dto.setProductImg(productImg);
 		String category = service.selectClassification(d.get("name"));
 		dto.setClassification(category);
+		
 		dto.setProduct_no(prNo);
 		service.orderHistory(dto);
 	}
@@ -82,7 +85,7 @@ public class RentalController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/cancle")
+	@RequestMapping(value = "/orderCancle")
 	public void testCancelPaymentAlreadyCancelledImpUid(@RequestBody String uid) {
 		String uuid = uid.substring(0,uid.length()-1);
 		String test_already_cancelled_imp_uid = uuid;

@@ -26,7 +26,7 @@ public class BasketController {
 	
 	@Autowired IBasketService basketSvc;
 	
-	@RequestMapping("/basket")
+	@RequestMapping("/myBasket")
 	public String basket(Model model, HttpSession session) {
 //		logger.warn("session.getAttribute(\"id\") : "+session.getAttribute("id"));
 		String id = (String)session.getAttribute("id");
@@ -40,9 +40,13 @@ public class BasketController {
 		
 		return "basket/basketForm";
 	}
+	
 	@RequestMapping("/basketOrder")
 	public String basketOrder(Model model, @RequestParam List<String> prNo) {
 		
+		for(String s : prNo) {
+			System.out.println("prNo: "+s);
+		}
 		return "basket/basketOrderForm";
 	}
 	
@@ -52,7 +56,6 @@ public class BasketController {
 //		logger.warn(map.get("no"));
 		String no = map.get("noTemp");
 		String id = (String) session.getAttribute("id");
-//		logger.warn("ctl no_ : " + no_);
 		
 		String msg = basketSvc.basketProduct(no, id);
 		map.put("msg", msg);
@@ -68,7 +71,7 @@ public class BasketController {
 		boolean done = basketSvc.deleteBasket(no, id);
 		if (done == false)
 			model.addAttribute("msg", "장바구니 삭제오류 발생");
-		return "forward:index?formpath=basket";
+		return "redirect:index?formpath=mypage&category=myBasket";
 	}
 	
 	

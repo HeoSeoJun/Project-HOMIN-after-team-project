@@ -10,39 +10,43 @@
 	.all_check{border: 1px solid #BDBDBD; border-radius: 5px; margin-bottom: 35px; width: 100%; height: 50px; line-height:50px;}
 	.terms_{padding-bottom: 15px;}
 	.m_btn{float: right;}
-	.agr{background:purple; clear:both; margin: 30px auto; border:0; border-radius: 150px; width: 300px; height: 65px; color: white;}
+	.agr{background:black; clear:both; margin: 30px auto; border:0; border-radius: 150px; width: 300px; height: 65px; color: white;}
 	#modal1,#modal2,#modal3{background-color:transparent; border: 0;}
 	#modal1,#modal2,#modal3:hover {cursor: pointer;}
 	.agr:disabled {background:#8C8C8C;}
 	#all,#box1,#box2,#box3{vertical-align: -1px;margin-right: 5px; margin-left: 10px;}
 	.agr{clear:both; margin: 0px auto; border-radius: 150px; width: 300px; height: 65px;}
+	#btn { font-size: 25px; cursor: pointer;}	
+	#div_productOrder .info {
+		margin-bottom: 30px;
+	}
 </style>
-    <script>
-	    function allCheck() {
-			var len = document.getElementsByName("box");
-			if(document.getElementById("all").checked==true){  
-				document.getElementById("btn").disabled = false;
-		      	for(var i=0;i<len.length;i++) 
-		       	len[i].checked=true;  
-		   	}
-			if(document.getElementById("all").checked==false){
-				document.getElementById("btn").disabled = true;
-		     	for(var i=0;i<len.length;i++) 
-		    	len[i].checked=false;  
-		   }
-		}
-	    function check(){
-	    	if(document.getElementById("box1").checked == false || document.getElementById("box2").checked == false ||document.getElementById("box3").checked == false){
-	    		$("input:checkbox[id='all']").prop("checked", false);
-	    		document.getElementById("btn").disabled = true;
-	    	}else{
-	    		$("input:checkbox[id='all']").prop("checked", true);
-	    		document.getElementById("btn").disabled = false;
-	    	}
-	    		
-	    }
-    </script>
-<div>
+<script>
+   	function allCheck() {
+		var len = document.getElementsByName("box");
+		if(document.getElementById("all").checked==true){  
+			document.getElementById("btn").disabled = false;
+	      	for(var i=0;i<len.length;i++) 
+	       	len[i].checked=true;  
+	   	}
+		if(document.getElementById("all").checked==false){
+			document.getElementById("btn").disabled = true;
+	     	for(var i=0;i<len.length;i++) 
+	    	len[i].checked=false;  
+	   	}
+	}
+   function check(){
+   	if(document.getElementById("box1").checked == false || document.getElementById("box2").checked == false ||document.getElementById("box3").checked == false){
+   		$("input:checkbox[id='all']").prop("checked", false);
+   		document.getElementById("btn").disabled = true;
+   	}else{
+   		$("input:checkbox[id='all']").prop("checked", true);
+   		document.getElementById("btn").disabled = false;
+   	}
+   		
+   }
+</script>
+<div id="div_productOrder">
 	<div class = "info">
 		<div>
 			<h1>고객정보</h1>
@@ -54,7 +58,7 @@
 			<span>휴대폰번호</span>&nbsp<span>${memberInfo.phone }</span>
 		</div>
 	</div>
-	<br><br>
+	
 	<div class = "terms">
 		<div>
 			<h1>약관동의</h1>
