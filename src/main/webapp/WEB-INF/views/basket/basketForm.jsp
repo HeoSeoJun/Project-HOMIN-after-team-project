@@ -16,14 +16,13 @@
 'use strict';
 	var totalPrice = 0;
 	function allCheck() {
-		
 		var len = document.getElementsByName("box");
 		if(document.getElementById("all").checked==true){
 	    	for(var i=0; i < len.length; i++) {
 	    		len[i].checked=true;  
 	    		totalPrice += Number(document.getElementById("pr"+i).value);
-	    		document.getElementById('price').innerText = totalPrice;
 	    		document.getElementById('count').innerText = len.length;
+	    		document.getElementById('price').innerText = totalPrice;
 	    	}
 	    }
 		
@@ -62,10 +61,11 @@
 	} // getCheckedCnt
 	
 	function sumCheck(no){
-		var len = document.getElementsByName("box").length;
+// 		var len = document.getElementsByName("box").length;
 		if(document.getElementsByName("box")[no].checked == false){
 			$("input:checkbox[id='all']").prop("checked", false);
 		}
+		
 		getCheckedCnt();
 		getCheckedPrice(no);
 	} // sumCheck
@@ -161,11 +161,12 @@ input{appearance:auto;}
 			<tr><td colspan="7"><hr></td></tr>
 		</thead>
 		
-		<tbody>
+		<tbody id="tbody_basket">
 			<c:set var="total" value="0"></c:set>
 			<c:set var="prNo" value="0"></c:set>
 			<c:forEach var="bDto" items="${basket }">
 			<tr>
+<%-- 				<td><input type = "checkbox" id = "pr${prNo }" name = "box"  onclick='sumCheck(${prNo})' value = "${bDto.price }"></td> --%>
 				<td><input type = "checkbox" id = "pr${prNo }" name = "box"  onclick='sumCheck(${prNo})' value = "${bDto.price }"></td>
 				<c:choose>
 					<c:when test="${bDto.classification eq 'dryer' }">	
@@ -191,6 +192,7 @@ input{appearance:auto;}
 				<td>${bDto.product_no }</td>
 				<td style="cursor: pointer;" onclick = "location.href='${root}index?formpath=product&category=${bDto.classification }&prodNo=${bDto.product_no }'"><strong>${bDto.product_name }</strong></td>
 				<td>${bDto.price }</td>
+<%-- 				<td>${bDto.price }</td> --%>
 				<td><input id="but_deleteBasket" type="button" value="삭제" onclick="location.href='deleteBasket?no=${bDto.product_no}';"></td>
 			</tr>
 				<c:set var="total" value="${total + bDto.price }"></c:set>
