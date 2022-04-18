@@ -2,6 +2,12 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:url var="root" value="/" />
+<c:if test = "${sessionScope.id ne 'ADMIN@CARE.COM' }">
+	<script>
+		alert('잘못된 접근입니다.');
+		location.href = '${root}index?formpath=home';
+	</script>
+</c:if>
 <c:if test="${not empty msg }">
 	<script>
 		alert('${msg}');

@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:if test = "${sessionScope.id ne 'ADMIN@CARE.COM' }">
+	<script>
+		alert('잘못된 접근입니다.');
+		location.href = '${root}index?formpath=home';
+	</script>
+</c:if>
 <c:if test="${empty orderList }">
 	<script>
 			alert('주문된 제품이 없습니다.');

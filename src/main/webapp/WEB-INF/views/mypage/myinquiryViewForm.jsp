@@ -31,7 +31,7 @@
 }
 
 #box_btn_inquiry .cus_under_btn	{
-	width: 75; height: 30; font-size: 15; border-radius:10px;
+	width: 75; height: 30; font-size: 15; border-radius:10px; cursor: pointer;
 }
 
 #box_btn_inquiry .cus_under_btn:last-child {
@@ -125,7 +125,6 @@
 	
 	<div id="box_btn_inquiry" align="right">
 		<input class="cus_under_btn" type = "button" value="삭 제" onclick = "deleteInquiry();">
-		<input class="cus_under_btn" type="button" id="writeBtn"
-			value="목 록">
+		<input class="cus_under_btn" type="button" id="writeBtn" value="목 록" onclick="window.history.back();">
 	</div>
 </div>

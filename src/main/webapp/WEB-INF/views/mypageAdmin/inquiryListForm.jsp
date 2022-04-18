@@ -8,6 +8,12 @@
 		location.href = '${root}index?formpath=home';
 	</script>
 </c:if>
+<c:if test="${empty inquiryList }">
+	<script>
+			alert('개인 문의가 없습니다.');
+			location.href='${root }index?formpath=memberManagement';
+	</script>
+</c:if>
 <style>
 #center_inquiryList {
 	margin: 20 20 0 20;
