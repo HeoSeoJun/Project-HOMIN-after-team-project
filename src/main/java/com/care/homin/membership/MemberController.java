@@ -12,12 +12,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.care.homin.membership.dto.MemberDTO;
 import com.care.homin.membership.dto.PostcodeDTO;
 import com.care.homin.membership.service.IMemberService;
+import com.care.homin.membership.service.MemberServiceImple;
 
 @Controller
 public class MemberController {
-	@Autowired IMemberService service;
+	@Autowired MemberServiceImple service;
 	
-	@RequestMapping("member")
+	@RequestMapping("memberForm")
 	public String member() {
 		return "member/memberForm";
 	}
@@ -39,6 +40,7 @@ public class MemberController {
 	public String memberProc(MemberDTO member, PostcodeDTO post, Model model) {
 		String msg = service.memberProc(member, post);
 		model.addAttribute("msg", msg);
-		return "member/memberForm";
+		model.addAttribute("formpath", "home");
+		return "index";
 	}
 }

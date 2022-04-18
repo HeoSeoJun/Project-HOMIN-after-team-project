@@ -1,4 +1,7 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<c:url var="root" value="/"></c:url>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script
 	src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js">
@@ -88,87 +91,133 @@
 		}).open();
 	}
 </script>
-<script>
-	src="https//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js">
-</script>
-<center>
-<div>
-	<a href="/homin"><img src="https://lghomin.com/_resources/ea91048d/client/img/icon_logo_main.6f114ba.svg"></a>
-</div>
-<hr>
-	<h3>회원가입 정보 입력</h3>
-	<p>MY LG ID 가입을 위해 정보를 입력해주세요.</p>
-	<p>모두 필수 항목 입니다.</p>
+<style>
+#ct_mbForm {
+	padding: 30 10 10 10px;
+}
+
+#div_title_mbForm {
+	width: 130px;
+	margin-bottom: 15px;
+}
+
+#div_title_mbForm h3 {
+	font-size: 30px;
+}
+
+#div_subtitle_mbForm {
+	width: 350px;
+	padding: 10px 5px;
+	border: double red;
+	margin-bottom: 10px;
+}
+
+#div_subtitle_mbForm :first-child {
+	margin-bottom: 10px;
+}
+
+#table_mbForm tr {
+	line-height: 40px;
+}
+
+#table_mbForm th, td {
+	vertical-align: middle;
+	padding-right: 20px;
+}
+
+#table_mbForm tr :last-child {
+	padding-right: 0;
+}
+
+#table_mbForm input {
+	border-radius: 5px;
+	height: 25px;
+}
+
+#table_mbForm .text_input {
+	width: 200px;
+}
+
+#table_mbForm .btn_input {
+	background-color: black;
+	color: white;
+	width: 100px;
+	cursor: pointer;
+}
+
+#td_bottomBtn {
+	padding: 20 0 0 0;
+}
+
+</style>
+
+<center id="ct_mbForm">
+	<div id="div_title_mbForm">
+		<h3>회원가입</h3>
+		<hr>
+	</div>
+	<div id="div_subtitle_mbForm">
+		<p>HOM`IN 회원 가입을 위해 정보를 입력해주세요.</p>
+		<p>모두 필수 항목 입니다.</p>
+	</div>
 	<h3>
 		<font color="red" id="msg">${msg }</font>
 	</h3>
-	<form action="memberProc" method="post">
-		<table>
-			<tr>
-				<td align='right' height=40>아이디</td>
-				<td><input type=text name='id' id="id" style="width: 325px;height: 30px;
-							font-size:15px;"placeholder='이메일주소를 입력해주세요'
-							required data-valid="false" /></td>
-				<td colspan="2"><input type="button" style="height:30px;" value="중복 확인"
-					onclick="ajaxIsExist()"></td>
-			</tr>
-			<tr>
-				<td align='right' width=120>이름</td>
-				<td colspan="3"><input type=text name='nickname' style="width: 100px;height: 30px;
-							font-size:15px;" />
-			</tr>
-			<tr>
-				<td align='right' height=40>패스워드</td>
-				<td><input type="password" name='pw' style="width: 200px;height: 30px;
-							font-size:15px;" placeholder='pw 입력' /></td>
-			</tr>
-			<tr>
-				<td align='right'>패스워드 확인</td>
-				<td><input type="password" name='pwOk' style="width: 200px;height: 30px;
-							font-size:15px;"placeholder='pw 입력' /></td>
-			</tr>
-			<tr>
-				<td align='right' height=40>E-Mail</td>
-				<td><input type=text name='email' id="email" style="width: 250px;height: 30px;
-							font-size:15px;"placeholder='E-Mail 입력' /></td>
-				<td colspan="2"><input type="button" style="height:30px;" value="인증번호 전송"	onclick="sendAuth()"></td>
-			</tr>
-			<tr>
-				<td align='right'>인증번호</td>
-				<td><input type=text name='authNum' id="inputAuthNum" style="width: 150px;height: 30px;
-							font-size:15px;" placeholder='인증번호 입력' /></td>
-				<td colspan="2"><input type="button" style="height:30px;" value="인증번호 확인"	onclick="sendAuthConfirm()"></td>
-			</tr>
-			<tr>
-				<td align='right'>우편번호</td>
-				<td><input type=text name='zipcode' id="zipcode" style="width: 75px;height: 30px;
-							font-size:15px;"readonly="readonly" /></td>
-				<td colspan="2"><input type="button" style="height:30px;" value="우편번호 검색"		onclick="daumPost()"></td>
-			</tr>
-			<tr>
-				<td align='right'>주소</td>
-				<td colspan="3"><input type=text name='addr1' id="addr1" readonly="readonly" style="width: 475px; height: 30px; font-size:20px;" /></td>
-			</tr>
-			<tr>
-				<td align='right'>상세주소</td>
-				<td colspan="3"><input type=text name='addr2' id="addr2" style="width: 475px; height: 30px; font-size:15px;" /></td>
-			</tr>
-			<tr>
-				<td align='right'>휴대폰번호</td>
-				<td colspan='3'><input type=text name='phone' style="width: 175px; height: 30px; font-size:15px;"
-										placeholder='-는 생략하고 입력' />
-			</tr>
-			<tr>
-				<td align='center' height=40 colspan=4>
-				<input type=submit	value='가입하기' style="border-radius:10px; color:#FFFFFF; width: 120px; height: 40px; background-color:#B71256" /> 
-			</td>
-			</tr>
-			
-		</table>
-		<table style="width:1915px;">
-		<tr>
-				<td style="height:50px;"><%@ include file="/WEB-INF/views/common/footer.jspf" %></td>
-			</tr>
-		</table>
-	</form>
+	<div>
+		<form action="memberProc" method="post">
+			<table id="table_mbForm">
+				<tr>
+					<th>아이디</th>
+					<td><input class="text_input" type=text name='id' id="id" placeholder='이메일주소를 입력해주세요'
+								required data-valid="false" /></td>
+					<td><input class="btn_input" type="button" value="중복 확인" onclick="ajaxIsExist()"></td>
+				</tr>
+				<tr>
+					<th>이름</th>
+					<td><input class="text_input" type=text name='nickname' /></td>
+				</tr>
+				<tr>
+					<th>패스워드</th>
+					<td><input class="text_input" type="password" name='pw' placeholder='pw 입력' /></td>
+				</tr>
+				<tr>
+					<th>패스워드 확인</th>
+					<td><input class="text_input" type="password" name='pwOk' placeholder='pw 입력' /></td>
+				</tr>
+				<tr>
+					<th>E-Mail</th>
+					<td><input class="text_input" type=text name='email' id="email" placeholder='E-Mail 입력' /></td>
+					<td><input class="btn_input" type="button" value="인증번호 전송"	onclick="sendAuth()"></td>
+				</tr>
+				<tr>
+					<th>인증번호</th>
+					<td><input class="text_input" type=text name='authNum' id="inputAuthNum" placeholder='인증번호 입력' /></td>
+					<td><input class="btn_input" type="button" value="인증번호 확인"	onclick="sendAuthConfirm()"></td>
+				</tr>
+				<tr>
+					<th>우편번호</th>
+					<td><input class="text_input" type=text name='zipcode' id="zipcode" readonly="readonly" /></td>
+					<td><input class="btn_input" type="button" value="우편번호 검색" onclick="daumPost()"></td>
+				</tr>
+				<tr>
+					<th>주소</th>
+					<td><input class="text_input" type=text name='addr1' id="addr1" readonly="readonly" /></td>
+				</tr>
+				<tr>
+					<th>상세주소</th>
+					<td><input class="text_input" type=text name='addr2' id="addr2" /></td>
+				</tr>
+				<tr>
+					<th>휴대폰번호</th>
+					<td><input class="text_input" type=text name='phone' placeholder='-는 생략하고 입력' /></td>
+				</tr>
+				<tr>
+					<td id="td_bottomBtn" colspan="3" align="center">
+						<input class="btn_input" type=submit	value='가입하기' />
+						<input class="btn_input" type="button"	value='취소' onclick="location.href='${root}index?formpath=login'" />						
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
 </center>

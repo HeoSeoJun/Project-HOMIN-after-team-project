@@ -16,11 +16,10 @@ public class MailService {
 		try {
 			MimeMessageHelper messageHelper =
 					new MimeMessageHelper(message, true, "UTF-8");
-			messageHelper.setSubject(subject);
 			messageHelper.setTo(to);
+			messageHelper.setSubject(subject);
 			messageHelper.setText(body);
 			mailSender.send(message);
-			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

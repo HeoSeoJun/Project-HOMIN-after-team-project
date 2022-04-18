@@ -24,7 +24,7 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "/index")
-	public String index(Model model,@RequestParam String formpath) {
+	public String index(Model model, @RequestParam String formpath) {
 		model.addAttribute("formpath", formpath);
 		return "index";
 	}

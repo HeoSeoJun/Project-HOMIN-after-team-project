@@ -12,9 +12,16 @@
 	<select id="selectProductImg" parameterType="String" resultType = "String">
 		SELECT product_filename FROM homin_product WHERE product_name =#{productName}
 	</select>
+	<select id="getProductImg" parameterType="String" resultType = "String">
+		SELECT product_filename FROM homin_product WHERE product_no =#{prodNo}
+	</select>
+	
 	
 	<select id="selectClassification" parameterType="String" resultType = "String">
 		SELECT classification FROM homin_product WHERE product_name =#{productName}
+	</select>
+	<select id="getClassification" parameterType="String" resultType = "String">
+		SELECT classification FROM homin_product WHERE product_no =#{prodNo}
 	</select>
 	
 	<update id="productUpHit" parameterType="String" >

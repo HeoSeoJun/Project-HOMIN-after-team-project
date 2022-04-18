@@ -36,6 +36,9 @@ public class RentalService {
 	public String selectProductImg(String productName){
 		return dao.selectProductImg(productName);
 	}
+	public String getProductImg(String prodNo) {
+		return dao.getProductImg(prodNo);
+	}
 
 	public void orderHistory(orderDTO dto) {
 		dao.orderHistoryProc(dto);
@@ -50,7 +53,10 @@ public class RentalService {
 	public String selectClassification(String productName) {
 		return dao.selectClassification(productName);
 	}
-
+	public String getClassification(String prodNo) {
+		return dao.getClassification(prodNo);
+	}
+	
 	public ArrayList<RentalDTO> selectTopViews() {
 		return dao.selectTopViews();
 	}
@@ -76,4 +82,12 @@ public class RentalService {
 		dao.deleteProduct(no);
 		
 	}
+	
+	public void selectOrderHistory(String no, Model model, String prodNo) {
+		orderDTO dto = dao.selectOrderHistory(no);
+		model.addAttribute("orderHistory",dto);
+		model.addAttribute("productImg", dao.getProductImg(prodNo));
+		model.addAttribute("classification", dao.getClassification(prodNo));
+	}
+
 }

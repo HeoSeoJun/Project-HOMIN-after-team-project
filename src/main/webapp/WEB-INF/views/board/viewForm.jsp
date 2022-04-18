@@ -62,6 +62,25 @@
 </script>
 
 <style>
+#container_img_review {
+	display: flex;
+	justify-content: center;
+}
+
+#container_img_review img{
+	height: 150px;
+}
+
+#container_img_review :first-child {
+	float: left;
+	padding-right: 10px;
+}
+
+#container_img_review :last-child {
+	padding-right: 0;
+}
+
+
 #btn_deleteComment {
 	width: 70px;
 	height: 30px;
@@ -79,14 +98,12 @@
 
  <div class="board_wrap">
         <div class="board_title">
-        <strong>review</strong> 
-        <hr style="width : 150px;">
-        <p>상품 사용 후기입니다.</p>
+	        <strong>review</strong> 
+	        <hr style="width : 150px;">
+	        <p>상품 사용 후기입니다.</p>
      	 </div>
       
-      
         <div class="board_view_wrap">
-        
             <div class="board_view">
             
             <div class="board_view_sub">
@@ -119,10 +136,10 @@
             </div>
 
             <!-- 이미지 사진  -->
-            <div id="div_img_review">
+            <div id="container_img_review">
 	            <c:forEach var="file" items="${fileName }"> 
-					<div> 
-						<img src = "${file }" style="height: 200px;"> 
+					<div class="div_img_review"> 
+						<img src = "${file }" > 
 					</div>
 	 			</c:forEach>
             </div>            

@@ -5,13 +5,13 @@
 
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/board.css" />   
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/mypage.css" /> 
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <c:if test="${not empty msg }">
 	<script>
 		alert('${msg}');
-		location.href='${root}index?formpath=home';
+		location.href='${root}index?formpath=mypage';
 	</script>
 </c:if>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script>
 'use strict';
 	var totalPrice = 0;
@@ -20,7 +20,7 @@
 		if(document.getElementById("all").checked==true){
 	    	for(var i=0; i < len.length; i++) {
 	    		len[i].checked=true;  
-	    		totalPrice += Number(document.getElementById("pr"+i).value);
+	    		totalPrice += Number(document.getElementById("price_td"+i).innerText);
 	    		document.getElementById('count').innerText = len.length;
 	    		document.getElementById('price').innerText = totalPrice;
 	    	}
@@ -39,10 +39,11 @@
 	function getCheckedPrice(no){
 		var len = document.getElementsByName("box");
         if (document.getElementsByName("box")[no].checked == true) {
-        	totalPrice += Number(document.getElementById("pr"+no).value);
+//         	totalPrice += Number(document.getElementById("pr"+no).value);
+        	totalPrice += Number(document.getElementById("price_td"+no).innerText);
 	    	document.getElementById('price').innerText = totalPrice;
         }else{
-        	totalPrice -= Number(document.getElementById("pr"+no).value);
+        	totalPrice -= Number(document.getElementById("price_td"+no).innerText);
    	       	document.getElementById('price').innerText = totalPrice;		
         }
 	} // getCheckedPrice
@@ -78,15 +79,30 @@
 		       selectedElements.length;
 		 if(selectedElementsCnt == 0 || selectedElementsCnt == ''){
 		  alert('하나 이상 선택해주세요.');
+		  return;
 		 } else {
-		  var arrPr = [];
-		  var len = document.getElementsByName("box").length;
-		  for(var i = 0; i < len; i ++){
-			  if(document.getElementsByName("box")[i].checked == true){
-				  arrPr.push(document.getElementsByName("box")[i].value);
+			  var arrPr = [];
+			  var len = document.getElementsByName("box").length;
+			  for(var i = 0; i < len; i ++){
+				  if(document.getElementsByName("box")[i].checked == true){
+					  arrPr.push(document.getElementsByName("box")[i].value);
+				  }
 			  }
-		  }
-		  location.href="${root}index?formpath=basketOrder&prNo="+arrPr;
+			  location.href="${root}index?formpath=basketOrder&prNo="+arrPr;
+// 			$.ajax({
+// 				url: "basketOrder",
+// 				type: "POST",
+// 				contentType : "application/json; charset=utf-8",
+// 				data : JSON.stringify(arrPr),
+// 				success : function(){
+//         			location.href = "${root}index?formpath=basketOrder";
+// 				},
+// 				error : function(){
+// 					alert("문제");
+// 					location.href = "${root}index?formpath=home";
+// 				}
+// 			})
+			
 		 }
 	} // check
 </script>
@@ -124,12 +140,14 @@ input{appearance:auto;}
 	vertical-align: middle;
 }
 
+.btn_proc{
+	cursor: pointer;
+}
+
 #but_deleteBasket {
 	width: 50px; height: 25px;
 	border-radius: 5px;
 }
-
-
 
 .tr_totalCount {
 	line-height: 40px;
@@ -167,7 +185,7 @@ input{appearance:auto;}
 			<c:forEach var="bDto" items="${basket }">
 			<tr>
 <%-- 				<td><input type = "checkbox" id = "pr${prNo }" name = "box"  onclick='sumCheck(${prNo})' value = "${bDto.price }"></td> --%>
-				<td><input type = "checkbox" id = "pr${prNo }" name = "box"  onclick='sumCheck(${prNo})' value = "${bDto.price }"></td>
+				<td><input type = "checkbox" id = "pr${prNo }" name = "box"  onclick='sumCheck(${prNo})' value = "${bDto.product_no }"></td>
 				<c:choose>
 					<c:when test="${bDto.classification eq 'dryer' }">	
 						<td>건조기</td>
@@ -191,9 +209,9 @@ input{appearance:auto;}
 				<td><img src = "${root }resources/image/${bDto.classification}/${bDto.product_img}" style="width: 80px"></td>
 				<td>${bDto.product_no }</td>
 				<td style="cursor: pointer;" onclick = "location.href='${root}index?formpath=product&category=${bDto.classification }&prodNo=${bDto.product_no }'"><strong>${bDto.product_name }</strong></td>
-				<td>${bDto.price }</td>
 <%-- 				<td>${bDto.price }</td> --%>
-				<td><input id="but_deleteBasket" type="button" value="삭제" onclick="location.href='deleteBasket?no=${bDto.product_no}';"></td>
+				<td id="price_td${prNo }">${bDto.price }</td>
+				<td><input id="but_deleteBasket" class="btn_proc" type="button" value="삭제" onclick="location.href='deleteBasket?no=${bDto.product_no}';"></td>
 			</tr>
 				<c:set var="total" value="${total + bDto.price }"></c:set>
 				<c:set var="prNo" value="${prNo + 1 }"></c:set>
@@ -208,7 +226,7 @@ input{appearance:auto;}
 <!-- 					<td colspan="5" align="right">총 금액 : </td><td align="right"><label id = "price" ></label></td><td align="center">원 / 월</td> -->
 					<td colspan="5" align="right">총 금액 : </td><td align="right"><label id = "price" >0</label></td><td align="center">원 / 월</td>
 				</tr>
-				<tr><td colspan="7" align="right"><input id="but_apply" type="button" value="신청하기" onclick = "check()"></td></tr>
+				<tr><td colspan="7" align="right"><input id="but_apply" class="btn_proc" type="button" value="신청하기" onclick = "check()"></td></tr>
 				
 		</tbody>
 	</table>

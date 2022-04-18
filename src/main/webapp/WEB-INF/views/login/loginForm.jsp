@@ -6,6 +6,11 @@
 		location.href='/homin/';
 	</script>
 </c:if>
+<c:if test="${not empty msg }">
+	<script>
+		alert(${msg});
+	</script>
+</c:if>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script>
 	function idPwCheck() {
@@ -14,10 +19,12 @@
 		
 		if (i == ""){
 			alert('아이디를 입력해주세요');
+			document.getElementById('id').focus();
 			return;			
 		}
 		if (p == ""){
 			alert('비밀번호를 입력해주세요');
+			document.getElementById('pw').focus();
 			return;			
 		}
 		
@@ -50,16 +57,14 @@
 	margin-bottom: 40px;
 }
 
-#div_loginForm table caption {
-	font-size: 25px;
-	font-weight: bold;
-	margin-bottom: 20px;
+#div_loginForm table {
+/* 	height: 250px; */
+/* 	align-items: center; */
+/* 	padding-bottom: 20px; */
 }
 
-#div_loginForm table {
-	height: 250px;
-	align-items: center;
-	padding-bottom: 20px;
+#div_loginForm td {
+	padding-bottom: 15px;
 }
 
 #div_loginForm label {
@@ -67,15 +72,17 @@
 }
 
 .input_info {
-	width: 350; height: 30; font-size: 15; */
+	width: 350; height: 30; font-size: 15;
+	border-radius: 5px;
 }
 
 #but_login {
-	width: 120px; height:30px; font-size:15; cursor:pointer; border-radius:10px;
+	width: 150px; height:30px; font-size:15; cursor:pointer; border-radius:10px;
+	background-color: black; color: white;
 }
 
 #but_kakaologin {
-	width:250px;
+	width:180px;
 }
 
 </style>
@@ -88,13 +95,12 @@
 <div id="div_loginForm">
 	<form action="${root }loginProc" id="f"  method="post">
 		<table>
-			<caption>로그인</caption>
 			<tr>
 				<td><label class="form-sub">MY HOM`IN ID (이메일)</label></td>
 			</tr>
 			<tr>
 				<td>
-					<input class="input_info"type=text id="id" name='id' placeholder="MY HOM`IN ID (이메일)"/>
+					<input class="input_info" type=text id="id" name='id' placeholder="MY HOM`IN ID (이메일)"/>
 				</td>
 			</tr>
 			
@@ -107,12 +113,11 @@
 				</td>
 			</tr>
 			<tr>
-				<td><label id="msg" style="color:red;"></label></td>
+				<td style="padding-bottom: 0px;"><label id="msg" style="color:red;"></label></td>
 			</tr>
 			<tr>
 				<td align='center'>
 					<input id="but_login" type="button" value='로그인' onclick="idPwCheck()"/>
-					
 				</td>
 			</tr>
 			<!-- 카카오 로그인 API -->
@@ -126,8 +131,8 @@
 				</td>
 			</tr>
 			<tr>
-				<td align="center">
-					<a href="${root }member">회원가입</a> |
+				<td align="center"  style="padding-bottom: 0;">
+					<a href="${root }index?formpath=memberForm">회원가입</a> |
 					<a href="">아이디 찾기</a> |
 					<a href="">비밀번호 찾기</a>
 				</td>

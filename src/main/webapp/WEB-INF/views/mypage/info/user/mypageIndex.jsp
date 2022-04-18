@@ -38,6 +38,7 @@
 
 #div_mgmt .button{
 	width: 75; height: 30; font-size: 15; border-radius:10px;
+	background-color: black; color: white; cursor: pointer;
 }
 </style>
 
@@ -76,7 +77,7 @@
 				<tr>
 					<td colspan="2">
 						<input class="button" type="button"
-								value="수정" onclick="location.href='${root}index?formpath=mypage&category=pwCheckForm'">
+								value="수정" onclick="location.href='${root}index?formpath=pwCheckForUpdate'">
 <!-- 								value="수정" onclick="pwCheckForm()"> -->
 					</td>
 				</tr>
@@ -96,7 +97,7 @@
 			
 		<div>
 			<input class="button" type="button" 
-							value="회원탈퇴" onclick="location.href='${root}index?formpath=mgmt/confirmPw'">
+							value="회원탈퇴" onclick="location.href='${root}index?formpath=pwCheckForDelete'">
 		</div>
 	</section>
 </div>

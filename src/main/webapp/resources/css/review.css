@@ -137,7 +137,7 @@
   display: flex;
   justify-content: center;
   align-items 	: center;
-  margin :50px;
+  margin :30px;
 }
 
 .board_row a{
@@ -152,12 +152,13 @@
 /*     background-color: #00a9b4; */
 }
 
-.board_row_bottom {
-	margin : 10px;
-	display :flex;
-	justify-content : space-between;
-	align-items : center; 
-}
+/* .board_row_bottom { */
+/* 	margin : 10px; */
+/* /* 	display: flex; */ */
+/* /* 	justify-content: center; */ */
+/* 	text-align: right; */
+/* 	align-items : center;  */
+/* } */
 
 .review_underbar_1{
 	width: 100px;

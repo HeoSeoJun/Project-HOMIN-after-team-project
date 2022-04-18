@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.care.homin.mypageAdmin.repository.IMypageAdminDAO">
-	<resultMap type="com.care.homin.membership.dto.MemberDTO" id="memberDtoList">
+	<resultMap id="memberDtoList" type="com.care.homin.membership.dto.MemberDTO" >
 		<result property="no" column="no"/>
 		<result property="id" column="id"/>
 		<result property="nickname" column="nickname"/>
@@ -12,7 +12,7 @@
 		SELECT * FROM member_homin
 	</select>
 	
-	<resultMap type="com.care.homin.membership.dto.PostcodeDTO" id="postcodeDtoList">
+	<resultMap id="postcodeDtoList" type="com.care.homin.membership.dto.PostcodeDTO" >
 		<result property="id" column="id"/>
 		<result property="zipcode" column="zipcode"/>
 		<result property="addr1" column="addr1"/>
@@ -22,7 +22,7 @@
 		SELECT * FROM postcode_homin
 	</select>
 	
-	<resultMap type="com.care.homin.membership.dto.MemberDTO" id="memberDtoByNo">
+	<resultMap id="memberDtoByNo" type="com.care.homin.membership.dto.MemberDTO" >
 		<result property="no" column="no"/>
 		<result property="id" column="id"/>
 		<result property="nickname" column="nickname"/>
@@ -33,11 +33,11 @@
 		SELECT * FROM member_homin WHERE no = #{no}
 	</select>
 	
-	<resultMap type="com.care.homin.login.dto.LoginDTO" id="loginDto">
+	<resultMap id="loginDto" type="com.care.homin.login.dto.LoginDTO" >
 		<result property="id" column="id"/>
 		<result property="pw" column="pw"/>
 	</resultMap>
-	<select resultMap="loginDto" id="infoLogin" parameterType="String">
+	<select id="infoLogin" resultMap="loginDto" parameterType="String">
 		SELECT * FROM login_homin WHERE id = #{id}
 	</select>
 	
@@ -47,5 +47,76 @@
 	<delete id="deleteAddr" parameterType="String">
 		DELETE FROM postcode_homin WHERE id=#{id}
 	</delete>
+	
+	<!-- 회원 관리 -->
+	<select  id="selectAllMember" parameterType="String" resultType="com.care.homin.membership.dto.MemberDTO">
+		SELECT * FROM member_homin ORDER BY no
+	</select>
+	
+	<select  id="selectMemberSearched" parameterType="String" resultType="com.care.homin.membership.dto.MemberDTO">
+		SELECT * FROM member_homin
+			<if test="find == 'id'">WHERE id LIKE '%'||#{search}||'%'</if>
+			<if test="find == 'tel'">WHERE phone LIKE '%'||#{search}||'%'</if>
+			ORDER BY no		
+	</select>
+	
+	
+	<!-- 주문 관리 -->
+	<resultMap type="com.care.homin.rental.dto.orderDTO" id="order">
+		<result property="uid" column="IMP_UID"/>
+		<result property="email" column="BUYER_EMAIL"/>
+		<result property="addr" column="BUYER_ADDR"/>
+		<result property="postcode" column="BUYER_POSTCODE"/>
+		<result property="name" column="BUYER_NAME"/>
+		<result property="tell" column="BUYER_TELL"/>
+		<result property="amount" column="PRODUCT_AMOUNT"/>
+		<result property="productName" column="PRODUCT_NAME"/>
+		<result property="buyer_id" column="BUYER_ID"/>
+	</resultMap>
+	<select id="orderList" resultMap="order">
+		SELECT * FROM homin_order
+	</select>
+	
+	<select id="orderListSearched" resultMap="order">
+		SELECT * FROM homin_order
+			<if test="sel == 'uid'">WHERE imp_uid LIKE '%'||#{sear}||'%'</if>
+			<if test="sel == 'id'">WHERE buyer_id LIKE '%'||#{sear}||'%'</if>
+			<if test="sel == 'tell'">WHERE buyer_tell LIKE '%'||#{sear}||'%'</if>
+	</select>
+	
+	<select id="orderDetail" resultMap="order" parameterType="String">
+		SELECT * FROM homin_order WHERE imp_uid=#{uid}
+	</select>
+	
+	<update id="modifyOrderByAdmin" parameterType="com.care.homin.rental.dto.orderDTO">
+		UPDATE homin_order SET buyer_tell=#{tell}, buyer_email=#{email}, buyer_postcode=#{postcode}, buyer_addr=#{addr} WHERE imp_uid=#{uid}
+	</update>
+	
+	<!-- 문의 관리 -->
+	<select id="inquiryCount" resultType="int" parameterType="HashMap">
+		SELECT count(*) FROM inquiry 
+	</select>
+	
+	<select id="inquiryList" resultType="com.care.homin.servicecenter.dto.InquiryDTO" parameterType="int">
+		SELECT B.* FROM(
+			SELECT rownum rn, A.* FROM (
+				SELECT * FROM inquiry
+				<choose>
+					<when test="sel == 'waiting'">WHERE state LIKE '%'||#{sel}||'%'</when>
+					<when test="sel == 'complete'">WHERE state LIKE '%'||#{sel}||'%'</when>
+				</choose>
+				 ORDER BY no DESC 
+			)A
+		)B WHERE rn BETWEEN #{b} and #{e}
+	</select>
+	
+	<select id = "selectInquiry" resultType = "com.care.homin.servicecenter.dto.InquiryDTO">
+		SELECT * FROM inquiry WHERE no=#{no}
+	</select>
+	
+	<update id="inquiryAnswerProc" parameterType="com.care.homin.servicecenter.dto.InquiryDTO" >
+		UPDATE inquiry SET answer=#{answer}, state=#{state} WHERE no=#{no}
+	</update>
+	
 	
 </mapper>

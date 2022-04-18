@@ -76,19 +76,22 @@ public class ServicecenterService {
 		model.addAttribute("dto",dto);
 		
 	}
-	public void allInquiry(Model model, int currentPage, HttpServletRequest req,String select) {
+	
+	public void allInquiry(Model model, int currentPage, HttpServletRequest req, String select) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("select", select);
 		
 		int totalCount = dao.inquiryCount(map);
-		int pageBlock = 10;
+		int pageBlock = 1;
 		int end = currentPage * pageBlock;
 		int begin = end + 1 - pageBlock;
 
 		ArrayList<InquiryDTO> inquiryList = dao.inquiryList(begin, end, select);
 		model.addAttribute("inquiryList", inquiryList);
 
-		String url = req.getContextPath() + "/inquiryAnswer?";
+//		logger.warn(req.getContextPath());
+//		String url = req.getContextPath() + "/inquiryList?";
+		String url = req.getContextPath() + "/index?formpath=inquiryList?";
 		if(select != null) {
 			url+="select="+select+"&";
 		}
@@ -96,6 +99,7 @@ public class ServicecenterService {
 		model.addAttribute("page", PageConfig.getNavi(currentPage, pageBlock, totalCount, url));
 		
 	}
+	
 	public void viewProc(int no, Model model) {
 		InquiryDTO view = dao.selectInquiry(no);
 		String[] fileName = new String[0];

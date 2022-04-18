@@ -31,7 +31,7 @@ public class MemberServiceImple implements IMemberService{
 	public String memberProc(MemberDTO member, PostcodeDTO post) {
 		Boolean check = (Boolean)session.getAttribute("authState");
 		
-		if(check == null) {
+		if(check == false || check == null) {
 			return "이메일 인증 후 가입 할 수 있습니다.";
 		}
 		LoginDTO login = member;
@@ -57,14 +57,17 @@ public class MemberServiceImple implements IMemberService{
 	@Autowired MailService mailService;
 	@Override
 	public void sendAuth(String email) {
+//		System.out.println("== Service ==");
+//		System.out.println("email: "+email);
 		String authNum = (String)session.getAttribute("authNum");
 		if(authNum == null) {
 			Random r = new Random();
 			String randNum = String.format("%06d", r.nextInt(1000000));
+			System.out.println("randNum: "+randNum);
 			session.setAttribute("authNum", randNum);
-			session.setMaxInactiveInterval(180);
+			session.setMaxInactiveInterval(3*60);
 			mailService.sendMail(email, "[인증번호]", randNum);
-			logger.warn(randNum);
+//			logger.warn(randNum);
 		}else
 			logger.warn("인증번호는 생성되어 있음");
 	}

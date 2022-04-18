@@ -6,14 +6,39 @@
 
 <style>
 	input{appearance:auto;}
-	.info_name{padding-top: 20px; padding-bottom: 20px;}
-	.all_check{border: 1px solid #BDBDBD; border-radius: 5px; margin-bottom: 35px; width: 100%; height: 50px; line-height:50px;}
+	#div_basketOrderForm {
+		padding: 20;
+	}
+	
+	#div_basketOrderForm h1 {
+		font-size: 25px;	
+	}
+	
+	.info { margin-bottom: 20px;}
+	
+	.info_title {
+		width: 100px;
+		margin-bottom: 20px;
+	}
+		
+	.info_name tr {
+		height: 40px;
+	}
+	
+	.info_name th {
+		padding-right: 15px;
+	}
+	
+	#div_terms_ {
+		margin-bottom: 20px;
+	}
+	.all_check{border: 1px solid #BDBDBD; border-radius: 5px; margin-bottom: 20px; width: 100%; height: 50px; line-height:50px;}
 	.terms_{padding-bottom: 15px;}
 	.m_btn{float: right;}
-	.agr{background:purple; clear:both; margin: 30px auto; border:0; border-radius: 150px; width: 300px; height: 65px; color: white;}
+	.agr{background:black; clear:both; margin: 30px auto; border:0; border-radius: 150px; width: 300px; height: 65px; color: white; cursor: pointer;}
 	#modal1,#modal2,#modal3{background-color:transparent; border: 0;}
 	#modal1,#modal2,#modal3:hover {cursor: pointer;}
-	.agr:disabled {background:#8C8C8C;}
+	.agr:disabled {background:#8C8C8C; cursor: default;}
 	#all,#box1,#box2,#box3{vertical-align: -1px;margin-right: 5px; margin-left: 10px;}
 	.agr{clear:both; margin: 0px auto; border-radius: 150px; width: 300px; height: 65px;}
 </style>
@@ -30,8 +55,9 @@
 		     	for(var i=0;i<len.length;i++) 
 		    	len[i].checked=false;  
 		   }
-		}
-	    function check(){
+		} // allCheck
+	    
+		function check(){
 	    	if(document.getElementById("box1").checked == false || document.getElementById("box2").checked == false ||document.getElementById("box3").checked == false){
 	    		$("input:checkbox[id='all']").prop("checked", false);
 	    		document.getElementById("btn").disabled = true;
@@ -39,33 +65,53 @@
 	    		$("input:checkbox[id='all']").prop("checked", true);
 	    		document.getElementById("btn").disabled = false;
 	    	}
-	    		
+	    } // check
+	    
+	    function basketOrderProc() {
+	    	var temp_prNo = document.getElementById('temp_prNo').value;
+// 			console.log(`temp_fruits: ${temp_fruits}`);
+			var prNo = JSON.stringify(temp_prNo);
+// 			console.log(`fruits: ${fruits}`);
+			document.getElementById('prNo').value=prNo;
+			document.getElementById('f').submit();
+	    	
+// 	    	location.href='${root}index?formpath=basketOrderProc';
 	    }
+	    
     </script>
-<div>
+<div id="div_basketOrderForm">
 	<div class = "info">
-		<div>
+		<div class="info_title">
 			<h1>고객정보</h1>
+			<hr>
 		</div>
 		<div class = "info_name">
-			<span>이름</span>&nbsp<span>${memberInfo.nickname }</span>
+			<table>
+				<tr>
+					<th>이름</th><td>${memberInfo.nickname }</td>
+				</tr>
+				<tr>
+					<th>휴대폰번호</th><td>${memberInfo.phone }</td>
+				</tr>
+			</table>
 		</div>
 		<div>
-			<span>휴대폰번호</span>&nbsp<span>${memberInfo.phone }</span>
+			<form action="basketOrderProc" method="post" id="f">
+				<input type="hidden" id="temp_prNo" name="temp_prNo" value="${prNo }" />
+				<input type="hidden" id="prNo" name="prNo"/>
+			</form>
 		</div>
+		<hr>
 	</div>
-	<br><br>
 	<div class = "terms">
-		<div>
+		<div class="info_title">
 			<h1>약관동의</h1>
-			<br>
-			<hr/>
+			<hr>
 		</div>
-		<br>
 		<div class = "all_check">
 			<input type = "checkbox" id = "all" onclick = "allCheck()">전체 동의
 		</div>
-		<div>
+		<div id="div_terms_">
 			<div class = "terms_">
 				<input type = "checkbox" name = "box" id = "box1" onclick = "check()">
 				<label for="box1" class="check-label"></label>
@@ -77,9 +123,9 @@
 			<div class = "terms_">
 				<input type = "checkbox" name = "box" id = "box3" onclick = "check()"><span>[홈인] 개인정보 제 3자 제공 동의 (필수)</span><button id = "modal3" class = "m_btn"><span>약관보기</span></button>
 			</div>
-			<div style="display: flex; margin-top: 50px;">
-				<input type = button id = "btn" class = "agr" value = "동의" onclick = "location.href='${root}index?formpath=order&prodNo=${productInfo.product_no }'" disabled="disabled">
-			</div>
+		</div>
+		<div style="display: flex;">
+			<input type = button id = "btn" class = "agr" value = "동의" onclick = "basketOrderProc()" disabled="disabled">
 		</div>
 	</div>
 </div>

@@ -14,8 +14,8 @@ public class MailConfig {
 		JavaMailSenderImpl jms = new JavaMailSenderImpl();
 		jms.setHost("smtp.gmail.com");
 		jms.setPort(587);
-		jms.setUsername("hawonyu400@gmail.com"); //송신 계정 이메일
-		jms.setPassword("dkgkd1594826"); //송신 계정 비밀번호
+		jms.setUsername("physicalfox@gmail.com"); //송신 계정 이메일
+		jms.setPassword("vlwlzjfrr"); //송신 계정 비밀번호
 		
 		Properties prop = new Properties();
 		prop.setProperty("mail.teansport.protocol", "smtp");

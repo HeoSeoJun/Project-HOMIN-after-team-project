@@ -10,10 +10,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.care.homin.login.dto.LoginDTO;
 import com.care.homin.login.service.ILoginService;
@@ -35,7 +35,32 @@ public class MypageController {
 	public String mypage() {
 		return "forward:index?formpath=mypage";
 	}
+	
+	//사용자, 회원 조회
+	@RequestMapping("mypageIndex")
+	public String infoMgmt(Model model, HttpSession session) {
+		String id = (String) session.getAttribute("id");
+		AllDTO allDto = mypageSvc.infoMgmt(id);
+		
+		if (allDto != null)
+			model.addAttribute("allDto", allDto);
+		return "mypage/info/user/mypageIndex";
+	}
+	
 	//정보관리 위한 비밀번호 확인
+	@RequestMapping("/pwCheckForUpdate")
+	public String confirmPwForUdMb() {
+		return "mypage/info/user/pwCheckForUpdate";
+	}
+	@RequestMapping("/pwCheckForDelete")
+	public String confirmPwForDtMb() {
+		return "mypage/info/user/pwCheckForDelete";
+	}
+	@RequestMapping("/pwCheckForAddrDelete")
+	public String confirmPwForDtAddr() {
+		return "mypage/info/user/pwCheckForAddrDelete";
+	}
+	
 	@ResponseBody
 	@RequestMapping("pwCheckProc")
 	public HashMap<String, String> idPwCheck(LoginDTO loginDto, @RequestBody HashMap<String, String> map) {
@@ -54,35 +79,25 @@ public class MypageController {
 			map.put("msg", "");
 		return map;
 	}
-	//사용자, 회원 조회
-	@RequestMapping("mypageIndex")
-	public String infoMgmt(Model model, HttpSession session) {
-		String id = (String) session.getAttribute("id");
-		AllDTO allDto = mypageSvc.infoMgmt(id);
-		
-		if (allDto != null)
-			model.addAttribute("allDto", allDto);
-		return "mypage/info/user/mgmt";
-	}
-	//사용자, 회원 수정
-	@RequestMapping("pwCheckForm")
-	public String confirmPwForUdMb() {
-		return "mypage/info/user/confirmPw";
-	}
 	
-	@RequestMapping("/mgmt/updateMborm")
+	//사용자, 회원 수정
+	@RequestMapping("updateUserForm")
+	public String uUIF() {
+		return "mypage/info/user/updateMbForm";
+	}
+	@RequestMapping("updateUserInfoForm")
 	public String updateMbForm(String id, Model model) {
 		LoginDTO userInfo = mypageSvc.getUserInfo(id);
 		model.addAttribute("userInfo", userInfo);
-		return "mypage/info/user/updateMbForm";
+//		return "mypage/info/user/updateMbForm";
+		return "forward:index?formpath=updateUserForm";
 	}
-	@RequestMapping("mgmt/updateProc")
+	@RequestMapping("updateUserInfoProc")
 	public String updateProc(MemberDTO memberDto, Model model, HttpSession session) {
 		String msg = mypageSvc.updateProc(memberDto);
 		if (msg.equals("t")) {
 			session.invalidate();
 			model.addAttribute("msg", "회원정보 수정 완료!");
-			
 			model.addAttribute("formpath", "home");
 			return "index";
 		} else {
@@ -92,11 +107,11 @@ public class MypageController {
 		}
 	}
 	//사용자, 회원 탈퇴
-	@RequestMapping("/mgmt/confirmPw")
-	public String confirmPw() {
-		return "mypage/info/user/confirmPw";
-	}
-	@RequestMapping("mgmt/deleteProc")
+//	@RequestMapping("/mgmt/confirmPw")
+//	public String confirmPw() {
+//		return "mypage/info/user/confirmPw";
+//	}
+	@RequestMapping("deleteUserInfoProc")
 	public String deleteProc(LoginDTO loginDto, Model model, HttpSession session) {
 //			logger.warn("loginDto.getId() : " + loginDto.getId());
 //			logger.warn("loginDto.getPw() : " + loginDto.getPw());
@@ -107,7 +122,7 @@ public class MypageController {
 			model.addAttribute("formpath", "home");
 			return "index";
 		} else {
-			model.addAttribute("formpath", "mgmt/confirmPw");
+			model.addAttribute("formpath", "pwCheckFormForDelete");
 			return "index";
 		}
 	}
@@ -119,43 +134,53 @@ public class MypageController {
 		PostcodeDTO pc = mypageSvc.infoAddr(id);
 		
 		model.addAttribute("postCode", pc);
-		return "mypage/info/user/addr";
+		return "mypage/info/user/myAddress";
 	}
 	//사용자, 주소 수정
-	@RequestMapping("/addr/updateAdForm")
+	@RequestMapping("/updateAdForm")
 	public String updateAdForm() {
 		return "mypage/info/user/updateAdForm";
 	}
-	@RequestMapping("addr/updateProc")
+	@RequestMapping("updateAdProc")
 	public String updateAddrProc(PostcodeDTO postCode, HttpSession session, Model model) {
 //		logger.warn("session.getAttribute(\"id\") : " + session.getAttribute("id"));
 		String id = (String) session.getAttribute("id");
+		
+//		System.out.println("== updateAdProc ==");
+//		System.out.println(postCode.getAddr1());
+//		System.out.println(postCode.getAddr2());
+//		System.out.println(postCode.getZipcode());
+		
 		postCode.setId(id);
-		String msg = mypageSvc.updateAddrProc(postCode);
-		if (msg.equals("주소지가 변경되었습니다")) {
+		boolean result = mypageSvc.updateAddrProc(postCode);
+		if (result) {
+			session.invalidate();
+			String msg = "주소지가 변경되었습니다";
 			model.addAttribute("msg", msg);
-			model.addAttribute("formpath", "mypage");
+			model.addAttribute("formpath", "home");
 			return "index";
-		} else 
+		} else {
 			model.addAttribute("formpath", "addr/updateAdForm");
 			return "index";
+		}
 	}
 	
 	//사용자, 주소 삭제
-	@RequestMapping("/addr/confirmPw")
-	public String confirmPwForAddr() {
-		return "mypage/info/user/confirmPwAddr";
-	}
-	@RequestMapping("addr/deleteProc")
-	public String deleteProcAddr(LoginDTO loginDto, Model model) {
+//	@RequestMapping("/addr/confirmPw")
+//	public String confirmPwForAddr() {
+//		return "mypage/info/user/confirmPwAddr";
+//	}
+	@RequestMapping("deleteAddrInfoProc")
+	public String deleteAddrInfoProc(LoginDTO loginDto, Model model, HttpSession session) {
 		String msg = mypageSvc.deleteProcAddr(loginDto.getId());
 		
+//		session.invalidate();
 		model.addAttribute("msg", msg);
-		model.addAttribute("formpath", "info/addr");
+		model.addAttribute("formpath", "mypage");
 		return "index";
 	}
 	//사용자, 주소 추가
-	@RequestMapping("/addr/registerAdForm")
+	@RequestMapping("/registerAdForm")
 	public String registerAdForm() {
 		return "mypage/info/user/registerAdForm";
 	}
@@ -164,18 +189,22 @@ public class MypageController {
 		String id = (String) session.getAttribute("id");
 		postCode.setId(id);
 		
-		String msg = mypageSvc.registerAdProc(postCode);
-		logger.warn(msg);
-		if (msg.equals("주소지가 등록되었습니다")) {
+		boolean result = mypageSvc.registerAdProc(postCode);
+		String msg = "";
+//		logger.warn(msg);
+		if (result) {
+			msg = "주소지가 등록되었습니다!";
 			model.addAttribute("msg", msg);
-			model.addAttribute("formpath", "info/addr");
+			model.addAttribute("formpath", "mypage");
 			return "index";
 		} else {
-			model.addAttribute("formpath", "addr/registerAdForm");
+			msg = "실패: 주소지 등록";
+			model.addAttribute("msg", msg);
+			model.addAttribute("formpath", "mypage");
 			return "index";
 		}
 	}
-	// 개인 문의목록
+//	개인 문의
 	@RequestMapping(value = "myinquiry")
 	public String myinquiry(Model model, HttpSession session) {
 		String id = (String)session.getAttribute("id");

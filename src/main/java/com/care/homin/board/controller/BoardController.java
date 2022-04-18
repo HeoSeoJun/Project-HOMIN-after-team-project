@@ -27,7 +27,7 @@ public class BoardController {
 	}
 	@RequestMapping(value = "boardProc")
 	public String boardProc(Model model, @RequestParam(value="currentPage", required = false, defaultValue = "1")int currentPage,
-		HttpServletRequest req, String search, String select) {
+							HttpServletRequest req, String search, String select) {
 		service.boardProc(model, currentPage, req, search, select);
 		return "forward:/index?formpath=board";
 	}

@@ -1,10 +1,10 @@
 <%@ page contentType="text/html; charset=UTF-8"%> <%@ taglib
 uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:url var="root" value="/" />
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no"
-/>
+<!-- <meta -->
+<!--   name="viewport" -->
+<!--   content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" -->
+<!-- /> -->
 <c:url var="root" value="/" />
 <link
   rel="stylesheet"
@@ -31,17 +31,11 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
   
 
-	$(document).ready(function() {
-
+	$(document).ready(()=>{
 		$('.info_list .sub_li').hide();
 
-		$('.menu_li').mouseover(function() {
-			$('.sub_li').slideDown();
-
-		});
-		$('.menu_li').mouseleave(function() {
-			//$('.sub_li').hide();
-		});
+		$('.menu_li').mouseover(() => $('.sub_li').slideDown());
+		$('.sub_li').mouseleave(()=> $('.sub_li').hide());
 	});
 	
 </script>
@@ -90,30 +84,20 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
             </c:if>
             <c:if test="${sessionScope.id eq 'ADMIN@CARE.COM' }">
             	<li>
-	            	<a href = "${root }index?formpath=mypage"><label class = "menu_li">${sessionScope.nickname } 님</label>
-	            		 <img src="${pageContext.request.contextPath}/resources/image/account_circle.png"/>
-	            	</a>
+<%-- 	            	<a href = "${root }index?formpath=mypage"> --%>
+	            		<label class = "menu_li" style="font-weight: bold;">${sessionScope.nickname } 님</label>
+	            		<img src="${pageContext.request.contextPath}/resources/image/account_circle.png"/>
+<!-- 	            	</a> -->
 	            	<ul class = "sub_li">
-	            		<li><a href = "${root }index?formpath=memberManagement">회원관리</a></li>
-	            		<li><a href = "${root }index?formpath=productManagement&category=dryer">제품관리</a></li>
+	            		<li><a href = "${root }index?formpath=memberManagement">회원 관리</a></li>
+	            		<li><a href = "${root }index?formpath=productManagement&category=dryer">제품 관리</a></li>
+	            		<li><a href="${root }index?formpath=inquiryList">문의 관리</a></li>
+						<li><a href="${root }index?formpath=orderManagement">주문 관리</a></li>
 	            	</ul>
             	</li>
             </c:if>
           </c:otherwise>
         </c:choose>
-      </ul>
-    </div>
-    <div>
-      <ul class="info_list">
-        <li>
-          <a href="">
-            <!--             <img -->
-            <%--
-            src="${pageContext.request.contextPath}/resources/image/search2.png"
-            --%>
-            <!--             /> -->
-          </a>
-        </li>
       </ul>
     </div>
   </section>

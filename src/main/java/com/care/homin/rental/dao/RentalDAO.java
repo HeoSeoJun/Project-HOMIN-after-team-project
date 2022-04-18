@@ -16,8 +16,10 @@ public interface RentalDAO {
 	orderDTO selectOrderHistory(String no);
 	// 제품 이미지 가져오기
 	String selectProductImg(String productName);
+	String getProductImg(String prodNo);
 	// 제품 분류 가져오기
 	String selectClassification(String productName);
+	String getClassification(String prodNo);
 	// 제품 조회수 증가
 	void productUpHit(String product_no);
 	// 조회수 Top4 상품 정보 가져오기

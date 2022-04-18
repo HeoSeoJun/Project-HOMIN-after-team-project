@@ -81,7 +81,7 @@ public class BoardService {
 		map.put("select", select);
 		
 		int totalCount = dao.boardCount(map);
-		int pageBlock = 5;
+		int pageBlock = 3;
 		int end = currentPage * pageBlock;
 		int begin = end + 1 - pageBlock;
 

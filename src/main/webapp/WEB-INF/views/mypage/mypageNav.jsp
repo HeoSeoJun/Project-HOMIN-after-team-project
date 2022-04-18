@@ -67,8 +67,8 @@ aside ul li {
 			<c:when test="${sessionScope.id eq 'ADMIN@CARE.COM'}">
 				<p>관리자 메뉴</p>
 				<ul>
-					<li><a href="${root }index?formpath=mypage&category=info/manage">> 회원정보 관리</a></li>
-					<li><a href="${root }index?formpath=mypage&category=info/addrList">> 주소지 관리</a></li>
+					<li><a href="${root }index?formpath=info/manage">> 회원정보 관리</a></li>
+					<li><a href="${root }index?formpath=info/addrList">> 주소지 관리</a></li>
 					<li><a href="${root }index?formpath=mypage&category=myinquiry">> 문의 관리</a></li>
 					<li><a href="${root }index?formpath=mypage&category=orderHistory">> 주문 관리</a></li>
 				</ul>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:url var="root" value="/" />
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script>
 	function check() {
@@ -67,51 +68,93 @@
 		})
 	}
 </script>
+<style>
+#ct_updateForm {
+	padding-top: 30px;
+}
 
-<div>
-	<c:import url="mypage/mypageNav.jsp"></c:import>
-	
-	<div>
-		<h1>회원정보 수정</h1><br>
+#ct_updateForm h1 {
+	font-size: 30px;
+	margin-bottom: 15px;
+}
+
+#ct_updateForm h3 {
+	font-size: 18px;
+	margin-bottom: 10px;
+}
+
+#ct_updateForm table th,td {
+	line-height: 30px;
+	vertical-align: middle;
+	padding: 0 10 15 0;	
+} 
+
+#ct_updateForm table input {
+	border-radius: 5px; 
+}
+
+.text_info {
+	width: 200px;
+	height: 25px;	
+}
+
+.btn_info {
+	width: 100px;
+	height: 25px;
+	cursor: pointer;
+}
+
+.btn_bottom {
+	width: 80px;
+	height: 25px;
+	cursor: pointer;
+}
+
+
+</style>
+
+<center id="ct_updateForm">
+		<h1>회원정보 수정</h1>
 		<h3><font color="red" id="msg">${msg }</font></h3>
 	
-		<form action="mgmt/updateProc" id="f" method="post">
-		<table>
-			<tr>
-				<td height=40 >아이디</td>
-				<td><input type=text name='id' id="id" value="${userInfo.id }" readonly="readonly"/></td>
-			</tr>
-			<tr>
-				<td height=40>패스워드</td>
-				<td><input type="password" name='pw' id="pw" placeholder='pw 입력' /></td>
-				<td>패스워드 확인</td>
-				<td><input type="password" name='pwOk' id="pwOk" placeholder='pw 입력' /></td>
-			</tr>
-			<tr>
-				<td width=120>이름</td>
-				<td colspan="3"><input type=text name='nickname' value="${userInfo.nickname }"/>
-			</tr>
-			<tr>
-				<td height=40>E-Mail</td>
-				<td><input type=text name='email' id="email" value="${userInfo.email }" /></td>
-				<td colspan="2"><input type="button" value="인증번호 전송"	onclick="sendAuth()"></td>
-			</tr>
-			<tr>
-				<td>인증번호</td>
-				<td><input type=text name='authNum' id="inputAuthNum"	placeholder='인증번호 입력' /></td>
-				<td colspan="2"><input type="button" value="인증번호 확인"	onclick="sendAuthConfirm()"></td>
-			</tr>
-			<tr>
-				<td>휴대폰번호</td>
-				<td colspan='3'><input type=text name='phone' value="${userInfo.phone }"/>
-			</tr>
-			<tr>
-				<td align='center' height=40 colspan=4>
-					<input type="button" value='수정' style="width: 120px;" onclick="check()"/> 
-					<input type=reset value='취소'	style="width: 120px;" />
-				</td>
-			</tr>
-		</table>
-	</form>
-	</div>
-</div>
+		<form action="updateUserInfoProc" id="f" method="post">
+			<table>
+				<tr>
+					<th>아이디</th>
+					<td><input type=text  class="text_info" name='id' id="id" value="${userInfo.id }" readonly="readonly"/></td>
+				</tr>
+				<tr>
+					<th>패스워드</th>
+					<td><input type="password" class="text_info" name='pw' id="pw" placeholder='pw 입력' /></td>
+				</tr>
+				<tr>
+					<th>패스워드 확인</th>
+					<td><input type="password" class="text_info" name='pwOk' id="pwOk" placeholder='pw 확인' /></td>
+				</tr>
+				<tr>
+					<th>이름</th>
+					<td colspan="3"><input class="text_info" type=text name='nickname' value="${userInfo.nickname }"/>
+				</tr>
+				<tr>
+					<th>E-Mail</th>
+					<td><input type=text class="text_info" name='email' id="email" value="${userInfo.email }" /></td>
+					<td><input type="button" class="btn_info" value="인증번호 전송"	onclick="sendAuth()"></td>
+				</tr>
+				<tr>
+					<th>인증번호</th>
+					<td><input type=text class="text_info" name='authNum' id="inputAuthNum"	placeholder='인증번호 입력' /></td>
+					<td><input type="button" class="btn_info" value="인증번호 확인"	onclick="sendAuthConfirm()"></td>
+				</tr>
+				<tr>
+					<th>휴대폰번호</th>
+					<td><input type=text class="text_info" name='phone' value="${userInfo.phone }"/>
+				</tr>
+				<tr>
+					<td align='center'colspan=3>
+						<input type="button" class="btn_bottom" value='수정' onclick="check()"/> 
+						<input type="button" class="btn_bottom" value='취소' onclick="location.href='${root}index?formpath=mypage&category=mypageIndex';"/>
+					</td>
+				</tr>
+			</table>
+		</form>
+</center>

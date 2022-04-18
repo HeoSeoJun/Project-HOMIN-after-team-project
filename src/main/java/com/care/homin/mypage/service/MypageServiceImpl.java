@@ -99,23 +99,14 @@ public class MypageServiceImpl implements IMypageService{
 			return "f";
 	}
 	@Override
-	public String updateAddrProc(PostcodeDTO postCode) {
+	public boolean updateAddrProc(PostcodeDTO postCode) {
 		boolean chk = mypageDao.updateAddrProc(postCode);
-		if (chk)
-			return "t";
-		else
-			return "f";
-		
+		return chk;
 	}
 	@Override
-	public String registerAdProc(PostcodeDTO postCode) {
+	public boolean registerAdProc(PostcodeDTO postCode) {
 		boolean chk = mypageDao.registerAdProc(postCode);
-		String result = "";
-		if (chk)
-			result = "주소지가 등록되었습니다";
-		else
-			result = "주소지 등록 실패";
-		return result;
+		return chk;
 	}
 	@Override
 	public ArrayList<InquiryDTO> myInquiry(String id) {

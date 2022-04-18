@@ -82,7 +82,7 @@
 		<table>
 		<thead>
 			<tr>
-				<th>제품 사진</th><th>주문 번호</th><th>제품명</th><th>가격</th><th>주문취소 / 후기작성</th>
+				<th>제품 사진</th><th>주문 번호</th><th>제품명</th><th>가격</th><th>후기작성</th>
 			</tr>
 			<tr><td colspan="5"><hr></td></tr>
 		</thead>
@@ -94,7 +94,7 @@
 						<td><span style="cursor: pointer;" onclick="location.href='${root}index?formpath=product&category=${order.classification}&prodNo=${order.product_no}'">${order.productName }</span></td>
 						<td>${order.amount }원</td>
 						<td>
-							<input class="btn_orderHistory" type = "button" value = "주문 취소" onclick = "orderCancle('${order.uid}')">						
+<%-- 							<input class="btn_orderHistory" type = "button" value = "주문 취소" onclick = "orderCancle('${order.uid}')">						 --%>
 							<input class="btn_orderHistory" type = "button" value = "후기 작성" onclick = "location.href = '${root }index?formpath=review&product_img=${order.productImg}&category=${order.classification }&order_no=${order.uid }'">
 						</td>
 					</tr>

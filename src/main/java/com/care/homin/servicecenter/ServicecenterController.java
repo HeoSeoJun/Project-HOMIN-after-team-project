@@ -56,7 +56,7 @@ public class ServicecenterController {
 	public String inquiry() {
 		return "/servicecenter/inquiryForm";
 	}
-	
+
 	@RequestMapping(value = "/inquiryProc")
 	public String inquiryProc(MultipartHttpServletRequest multi) {
 		service.inquiryProc(multi);
@@ -76,13 +76,7 @@ public class ServicecenterController {
 		service.allInquiry(model, currentPage, req,select);
 		return "/servicecenter/inquiryAnswerForm";
 	}
-	
-	@RequestMapping(value = "/inquiryAnswerProc")
-	public String inquiryAnswerProc(InquiryDTO dto) {
-		service.inquiryAnswerProc(dto);
-		return "forward:index?formpath=home";
-	}
-	
+
 //	공지사항
 	@RequestMapping(value = "/notice")
 	public String notice(Model model) {
