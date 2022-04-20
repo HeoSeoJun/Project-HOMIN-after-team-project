@@ -24,3 +24,4 @@ SpringToolSuite / sql developer / Git & GitHub / putty / File Zilla
 ![mindmap_homin](https://user-images.githubusercontent.com/93304669/164241359-7fb3c06c-2473-41cd-aa30-a6e6621697fd.png)
 
 ### DB
+![homin_db](https://user-images.githubusercontent.com/93304669/164241807-3aecbb6f-087f-4848-b109-3e4b58d346d1.png)
